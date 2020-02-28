@@ -1,15 +1,5 @@
-{
-  "language": "cpp",
-  "os": [
-    "linux"
-  ],
-  "compiler": [
-    "clang"
-  ],
-  "group": "stable",
-  "dist": "xenial"
-}
-
+language: cpp,
+compiler: clang
 
 before-script:
   composer install --no-interaction
