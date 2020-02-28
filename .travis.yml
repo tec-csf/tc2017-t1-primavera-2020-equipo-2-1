@@ -1,2 +1,11 @@
-language: cpp
-compiler: clang
+{
+  "language": "cpp",
+  "os": [
+    "linux"
+  ],
+  "compiler": [
+    "clang"
+  ],
+  "group": "stable",
+  "dist": "xenial"
+}
