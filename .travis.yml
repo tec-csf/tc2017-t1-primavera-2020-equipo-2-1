@@ -9,3 +9,10 @@
   "group": "stable",
   "dist": "xenial"
 }
+
+
+before-script:
+  composer install --no-interaction
+  
+ script:
+  - introduccion.cpp
