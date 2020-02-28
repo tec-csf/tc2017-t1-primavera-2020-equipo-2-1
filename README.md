@@ -5,7 +5,7 @@
 ##### Integrantes:
 1. *Andrés Barragán Salas* - *A01026567* - *CSF*
 2. *[Poner aquí Nombre y Apellidos del integrante 2]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
-3. *[Poner aquí Nombre y Apellidos del integrante 3]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
+3. *Abraham Garca Del Corral* - *A01023256* - *CFS*
 4. *Rodrigo Quiroz Reyes* - *A01026546* - *CSF*
 5. *Gerardo Anglada de Landa* - *A01021917* - *CSF*
 
