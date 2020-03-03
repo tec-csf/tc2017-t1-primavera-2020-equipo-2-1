@@ -2,6 +2,7 @@
 #include <fstream>
 #include <stack>
 using namespace std;
+//Hola
 
 int contador(string &cont,char c) {
     string::const_iterator i;
