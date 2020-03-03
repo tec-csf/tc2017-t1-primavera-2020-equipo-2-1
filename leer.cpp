@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <fstream>
 #include <stack>
@@ -26,19 +25,24 @@ int contador(string &cont,char c) {
         if(cont.find("return") != string::npos || cont.find("&&") != string::npos || cont.find("||") != string::npos) {
             ++conta;
         }
+        if(cont.find("<<")!= string::npos||cont.find("#include")!= string::npos||cont.find("void")!= string::npos){
+            conta-=2;
+        }
         return conta;
-};
+}
 
 string leer(ifstream &ref) {
     int cont = 1;
     string s, contenido;
     
     while(getline(ref, s)) {
+        cout<<cont<<"  ";
         contenido += s;
         cout << contenido << " OE: " << contador(contenido, '+') << endl;
         contenido = "";
+        ++cont;
     }
-};
+}
 
 //Método principal
 int main(int argc, char const *argv[]){
@@ -63,9 +67,7 @@ int main(int argc, char const *argv[]){
     contenido= leer(archivo);
     archivo.close();
     return 0;
-    }
-
-    
+    }    
 }
 
 
