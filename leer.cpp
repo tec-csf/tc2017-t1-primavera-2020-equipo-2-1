@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <stack>
+#include <cstdio>
 using namespace std;
 //Hola
 
@@ -36,15 +37,14 @@ void leer(ifstream &ref) {
     int cont = 1;
     string s, contenido;
 
-    cout << "No. Línea || " << " Código\t\t\t\t\t\t || " << "OE: " << '\n';
-    cout << "-------------------------------------------------------------------" << '\n';
+    printf("%-11s || %-41s || %-3s \n", "No. Línea", "Código", "OE" );
+    printf("%s\n", "--------------------------------------------------------------");
 
     while(getline(ref, s)) {
-        cout << "   " << cont << "\t ||  ";
-        contenido += s;
-        cout << contenido << "\t\t\t\t ||  " << contador(contenido, '+') << endl;
-        contenido = "";
-        ++cont;
+      contenido += s;
+      printf("%-10d || %-40s || %-3d \n", cont, contenido.c_str(), contador(contenido, '+'));
+      contenido = "";
+      ++cont;
     }
 }
 
