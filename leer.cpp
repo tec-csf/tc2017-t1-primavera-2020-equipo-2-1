@@ -40,14 +40,32 @@ string leer(ifstream &ref) {
     }
 };
 
-int main() {
+//Método principal
+int main(int argc, char const *argv[]){
+    string path="";
+    string option=*(argv+1);
+    if(option=="-i"){
+        path=*(argv+2);
+    }
+    else{
+        cout<<"opcion '"+option+"' no encontrada"<<endl;
+        return 0;
+    }
     int cantidad;
     string contenido;
     ifstream archivo;
-    
-    archivo.open("/home/rojo/Escritorio/texto.txt");
-    contenido = leer(archivo);
+    archivo.open(path);//direccion del archivo a leer
+    if(archivo.fail()){
+        cout<<"Error, no se encontro el archivo"<<endl;
+        return 0;
+    }
+    else{
+    contenido= leer(archivo);
     archivo.close();
+    return 0;
+    }
+
+    
 }
 
 
