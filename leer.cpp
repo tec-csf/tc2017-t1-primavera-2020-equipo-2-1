@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <stack>
+#include <cstdio>
 using namespace std;
 //Hola
 
@@ -36,37 +37,36 @@ void leer(ifstream &ref) {
     int cont = 1;
     string s, contenido;
 
-    cout << "No. Línea || " << " Código\t\t\t\t\t\t || " << "OE: " << '\n';
-    cout << "-------------------------------------------------------------------" << '\n';
+    printf("%-11s || %-41s || %-3s \n", "No. Línea", "Código", "OE" );
+    printf("%s\n", "--------------------------------------------------------------");
 
     while(getline(ref, s)) {
-        cout << "   " << cont << "\t ||  ";
-        contenido += s;
-        cout << contenido << "\t\t\t\t ||  " << contador(contenido, '+') << endl;
-        contenido = "";
-        ++cont;
+      contenido += s;
+      printf("%-10d || %-40s || %-3d \n", cont, contenido.c_str(), contador(contenido, '+'));
+      contenido = "";
+      ++cont;
     }
 }
 
 //Método principal
-int main(int argc, char const *argv[]){
-    string path="";
-    string option=*(argv+1);
-    if(option=="-i"){
-        path=*(argv+2);
-    }
-    else{
-        cout<<"opcion '"+option+"' no encontrada"<<endl;
+int main(int argc, char const *argv[]) {
+    string path = "";
+    string option =* (argv + 1);
+    if(option == "-i") {
+        path =* (argv + 2);
+    } else {
+        cout << "opcion '" + option + "' no encontrada" << endl;
         return 0;
     }
+
     int cantidad;
     ifstream archivo;
+
     archivo.open(path);//direccion del archivo a leer
-    if(archivo.fail()){
-        cout<<"Error, no se encontro el archivo"<<endl;
+    if(archivo.fail()) {
+        cout << "Error, no se encontro el archivo" << endl;
         return 0;
-    }
-    else{
+    } else {
     leer(archivo);
     archivo.close();
     return 0;
