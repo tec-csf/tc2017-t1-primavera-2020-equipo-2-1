@@ -59,8 +59,10 @@ class Analizar{
         string forLoop(string linea){
             string expresion = ""; 
             string iteraciones = "";
+            string salto = "";
             int i = 0;
             int pos_asignacion, pos_puntoComa1, pos_comparacion, pos_puntoComa2; 
+            bool complejidad_logaritmica = false; 
 
             while(linea.at(i) != '='){
                 i++; 
@@ -82,6 +84,31 @@ class Analizar{
             }
             pos_puntoComa2 = i+1;
 
+            if (identificarOE(linea.substr(pos_puntoComa2, linea.length() - pos_puntoComa2 - 1))>1){
+                int a = 0; 
+                int b = linea.length()-1; 
+                
+                while(linea.at(b) != ')'){
+                    b--; 
+                }
+                a = b; 
+                while(linea.at(a) != '=' && linea.at(a) != '-' && linea.at(a) != '+' && linea.at(a) != '*' && linea.at(a) != '/'){
+                    a--;
+                }
+                if(linea.at(a) == '*' || linea.at(a) == '/' || linea.at(a-1) == '*' || linea.at(a-1) == '/'){
+                    complejidad_logaritmica = true; 
+                } else {
+                    a++;
+                    salto.append(linea.substr(a, b-a)); 
+                }
+            }
+
+            if (complejidad_logaritmica){
+                pilaLoopsCondiciones.push("log(n)"); 
+                pilaLoopsCondiciones_end.push("log(n)");
+                return "log(n)";
+            }
+
             expresion.append(to_string(identificarOE(linea.substr(0, pos_puntoComa1))));
             expresion.append("+("); 
             expresion.append(to_string(identificarOE(linea.substr(pos_puntoComa1, pos_puntoComa2 - pos_puntoComa1))));
@@ -91,11 +118,20 @@ class Analizar{
             iteraciones.append(linea.substr(pos_asignacion, pos_puntoComa1 - pos_asignacion - 1));
             iteraciones.append(")");
             expresion.append(iteraciones); 
-            expresion.append("+1)+(");
+            expresion.append("+1)");
+            if (salto.length()>0){
+                expresion.append("/");
+                expresion.append(salto);
+            }
+            expresion.append("+(");
             expresion.append(to_string(identificarOE(linea.substr(pos_puntoComa2, linea.length() - pos_puntoComa2 - 1))));
             expresion.append(")("); 
             expresion.append(iteraciones); 
             expresion.append(")");
+            if (salto.length()>0){
+                expresion.append("/");
+                expresion.append(salto);
+            }
 
             pilaLoopsCondiciones.push(iteraciones); 
             pilaLoopsCondiciones_end.push(iteraciones);
