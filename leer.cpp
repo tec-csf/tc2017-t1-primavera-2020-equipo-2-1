@@ -49,24 +49,24 @@ void leer(ifstream &ref) {
 }
 
 //Método principal
-int main(int argc, char const *argv[]){
-    string path="";
-    string option=*(argv+1);
-    if(option=="-i"){
-        path=*(argv+2);
-    }
-    else{
-        cout<<"opcion '"+option+"' no encontrada"<<endl;
+int main(int argc, char const *argv[]) {
+    string path = "";
+    string option =* (argv + 1);
+    if(option == "-i") {
+        path =* (argv + 2);
+    } else {
+        cout << "opcion '" + option + "' no encontrada" << endl;
         return 0;
     }
+
     int cantidad;
     ifstream archivo;
+
     archivo.open(path);//direccion del archivo a leer
-    if(archivo.fail()){
-        cout<<"Error, no se encontro el archivo"<<endl;
+    if(archivo.fail()) {
+        cout << "Error, no se encontro el archivo" << endl;
         return 0;
-    }
-    else{
+    } else {
     leer(archivo);
     archivo.close();
     return 0;
