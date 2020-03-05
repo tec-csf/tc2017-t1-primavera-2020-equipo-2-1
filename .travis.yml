@@ -11,5 +11,5 @@ install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 script: 
-  - g++ fuente.pp -std=c++17 -o travis_gcc_cpp17
+  - g++ fuente.cpp -std=c++17 -o travis_gcc_cpp17
   - ./travis_gcc_cpp17
