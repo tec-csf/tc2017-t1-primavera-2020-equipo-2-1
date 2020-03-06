@@ -36,12 +36,18 @@ int contador(string &cont,char c) {
 void leer(ifstream &ref) {
     int cont = 1;
     string s, contenido;
+    int cont2= 0;
 
     printf("%-11s || %-41s || %-3s \n", "No. Línea", "Código", "OE" );
     printf("%s\n", "--------------------------------------------------------------");
 
     while(getline(ref, s)) {
-      contenido += s;
+        contenido+=s;
+        if(contenido.at(0)==' '){
+            while(contenido.at(0)==' '){
+            contenido=contenido.substr(1,contenido.length());
+            }
+        }
       printf("%-10d || %-40s || %-3d \n", cont, contenido.c_str(), contador(contenido, '+'));
       contenido = "";
       ++cont;
