@@ -11,5 +11,5 @@ install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 script: 
-  - g++ introduccion.cpp -std=c++17 -o travis_gcc_cpp17
-  - ./travis_gcc_cpp17
+  - clang++ clase.cpp complejidad.cpp -o tarea
+  - ./tarea -i fuente.cpp
