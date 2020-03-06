@@ -12,4 +12,4 @@ install:
 
 script: 
   - g++ clase.cpp complejidad.cpp -o tarea
-  - ./tarea -i fuente.cpp
+  - ./tarea -i fuente3.cpp
