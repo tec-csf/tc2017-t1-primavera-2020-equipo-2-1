@@ -11,5 +11,5 @@ install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 script: 
-  - clang++ clase.cpp complejidad.cpp -o tarea
+  - g++ clase.cpp complejidad.cpp -o tarea
   - ./tarea -i fuente.cpp
