@@ -50,7 +50,12 @@ void Codigo::analizarComplejidad(ifstream &ref) {
     printf("%s\n", "--------------------------------------------------------------------------------------------");
 
     while(getline(ref, s)) { // Como obtener el size de un arreglo
-        contenido += s;
+        contenido+=s;
+        if(contenido.at(0)==' '){
+            while(contenido.at(0)==' '){
+            contenido=contenido.substr(1,contenido.length());
+            }
+        }
         string complejidadLinea = "";
         if(contenido.substr(0,4).compare("for(") == 0) {
             complejidadLinea = forLoop(contenido);
