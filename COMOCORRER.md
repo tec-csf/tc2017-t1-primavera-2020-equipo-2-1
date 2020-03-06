@@ -4,7 +4,7 @@
 
 #### Primero:
 Integré parte de leer.cpp con loops.cpp
-*Lee e imprime como leer.cpp, pero analiza los OE como loops*
+*Lee e imprime como leer.cpp, pero analiza los OE como loops.cpp*
 
 ---
 #### Segundo:
@@ -18,3 +18,7 @@ $ ./tarea -i fuente.cpp
 #### Tercero
 A partir de ahora, opino que lo mejor es crear branches y trabajar todo sobre  *clase.hpp*, *clase.cpp* y *complejidad.cpp*,
 integrando sus códigos a esto que ya existe en lugar de crear un nuevo archivo con un pedazo del proyecto, porque entre más tenemos, más se complica juntarlo todo, entonces mejor empear desde ahorita.
+
+---
+#### Cuarto
+fuente2.cpp, fuente3.cpp, fuente4.cpp son para visualizar como analiza la complejidad moviendo los espacios. cuando nos juntemos todos lo corremos juntos para que podamos ver la situación.
