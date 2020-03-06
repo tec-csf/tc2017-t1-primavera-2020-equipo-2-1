@@ -1,5 +1,5 @@
-/*  Codigo para leer for loops, aún no contiene la función de leer codigo y lo lee utilizando un arreglo
-    con el "codigo" dentro - Andrés*/
+/*  Andrés Barragán
+    Codigo que analiza la complejidad de un algoritmo con "for" y "while" inlcuido.*/
 
 #include <iostream>
 #include <stack>
@@ -29,31 +29,25 @@ class Analizar{
                     cout<<"("<<i+1<<")\t"<<codigo[i]<<"\tOE: "<<complejidadLinea<<endl;
 
                     if (polinomio.length()>0 && polinomio.at(polinomio.length()-1) !='('){
-                        polinomio.append("+"); 
+                        polinomio+= "+"; 
                     }
-                    polinomio.append(complejidadLinea);
-                    polinomio.append("+(");
-                    polinomio.append(pilaLoopsCondiciones.top());
+                    polinomio+= complejidadLinea + "+(" + pilaLoopsCondiciones.top() + ")(";
                     pilaLoopsCondiciones.pop(); 
-                    polinomio.append(")(");   
                 }
                 else if (codigo[i].substr(0, 6).compare("while(") == 0 || codigo[i].substr(0, 7).compare("while (") == 0){
                     complejidadLinea = whileLoop(codigo, numeroLineas, i); 
                     cout<<"("<<i+1<<")\t"<<codigo[i]<<"\tOE: "<<complejidadLinea<<endl;
 
                     if (polinomio.length()>0 && polinomio.at(polinomio.length()-1) !='('){
-                        polinomio.append("+"); 
+                        polinomio+= "+"; 
                     }
-                    polinomio.append(complejidadLinea);
-                    polinomio.append("+(");
-                    polinomio.append(pilaLoopsCondiciones.top());
+                    polinomio+= complejidadLinea + "+(" + pilaLoopsCondiciones.top() + ")("; 
                     pilaLoopsCondiciones.pop(); 
-                    polinomio.append(")(");  
                 }
                 else if (codigo[i].at(0) == '}'){
                     cout<<"("<<i+1<<")\t"<<codigo[i]<<endl; 
                     if (pilaLoopsCondiciones_end.size() > 0){
-                        polinomio.append(")"); 
+                        polinomio+= ")"; 
                         pilaLoopsCondiciones_end.pop();
                     }
                 }
@@ -62,9 +56,9 @@ class Analizar{
                     cout<<"("<<i+1<<")\t"<<codigo[i]<<"\tOE: "<<complejidadLinea<<endl;
 
                     if (polinomio.length()>0 && polinomio.at(polinomio.length()-1) !='('){
-                        polinomio.append("+"); 
+                        polinomio+= "+"; 
                     }
-                    polinomio.append(complejidadLinea); 
+                    polinomio+= complejidadLinea; 
                 }
             }
 
@@ -126,30 +120,16 @@ class Analizar{
                 return "logn";
             }
 
-            expresion.append(to_string(identificarOE(linea.substr(0, pos_puntoComa1))));
-            expresion.append("+("); 
-            expresion.append(to_string(identificarOE(linea.substr(pos_puntoComa1, pos_puntoComa2 - pos_puntoComa1))));
-            expresion.append(")(");
-            iteraciones.append("(");
-            iteraciones.append(linea.substr(pos_comparacion, pos_puntoComa2 - pos_comparacion - 1));
-            iteraciones.append("-(");
-            iteraciones.append(linea.substr(pos_asignacion, pos_puntoComa1 - pos_asignacion - 1));
-            iteraciones.append("))");
-            expresion.append(iteraciones); 
-            expresion.append("+1)");
+            expresion+= to_string(identificarOE(linea.substr(0, pos_puntoComa1))) + "+(" + to_string(identificarOE(linea.substr(pos_puntoComa1, pos_puntoComa2 - pos_puntoComa1))) + ")(";
+            iteraciones+= "(" + linea.substr(pos_comparacion, pos_puntoComa2 - pos_comparacion - 1) + "-(" + linea.substr(pos_asignacion, pos_puntoComa1 - pos_asignacion - 1) + "))";
+            expresion+= iteraciones + "+1)"; 
             if (salto.length()>0){
-                expresion.append("/");
-                expresion.append(salto);
+                expresion+= "/" + salto;
             }
-            expresion.append("+(");
-            expresion.append(to_string(identificarOE(linea.substr(pos_puntoComa2, linea.length() - pos_puntoComa2 - 1))));
-            expresion.append(")"); 
-            expresion.append(iteraciones); 
+            expresion+= "+(" + to_string(identificarOE(linea.substr(pos_puntoComa2, linea.length() - pos_puntoComa2 - 1))) + ")" + iteraciones;
             if (salto.length()>0){
-                expresion.append("/");
-                expresion.append(salto);
-                iteraciones.append(")/");
-                iteraciones.append(salto);
+                expresion+= "/" + salto; 
+                iteraciones+= ")/" + salto; 
             }
 
             pilaLoopsCondiciones.push(iteraciones); 
@@ -187,7 +167,12 @@ class Analizar{
             }
             pos_parentesis = b+1; 
 
+            variable_incremental = codigo[i-1].at(pos_asignacion-2); 
             for(int j=i; j<numero_lineas; j++){
+                if(codigo[j].at(0) == variable_incremental || (j>i && codigo[j].length()>2 && codigo[j].at(codigo[j].length()-2) == variable_incremental)){
+                    linea_variableIncremental = j; 
+                    break;
+                }
                 if(codigo[j].at(codigo[j].length()-1) == '{'){
                     parentesis.push(1); 
                 }
@@ -220,21 +205,12 @@ class Analizar{
                 return "logn";
             }
 
-            expresion.append("("); 
-            expresion.append(to_string(identificarOE(codigo[i])));
-            expresion.append(")(");
-            iteraciones.append("(");
-            iteraciones.append(codigo[i].substr(pos_comparacion, pos_parentesis - pos_comparacion - 1));
-            iteraciones.append("-(");
-            iteraciones.append(codigo[i-1].substr(pos_asignacion, pos_puntoComa - pos_asignacion));
-            iteraciones.append("))");
-            expresion.append(iteraciones); 
-            expresion.append("+1)");
+            expresion+= "(" + to_string(identificarOE(codigo[i])) + ")("; 
+            iteraciones+= "(" + codigo[i].substr(pos_comparacion, pos_parentesis - pos_comparacion - 1) + "-(" + codigo[i-1].substr(pos_asignacion, pos_puntoComa - pos_asignacion) + "))";
+            expresion+= iteraciones + "+1)";
             if (salto.length()>0){
-                expresion.append("/");
-                expresion.append(salto);
-                iteraciones.append(")/");
-                iteraciones.append(salto);
+                expresion+= "/" + salto; 
+                iteraciones+= ")/" + salto; 
             }
 
             pilaLoopsCondiciones.push(iteraciones); 
