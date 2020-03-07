@@ -65,7 +65,6 @@ int main(int argc, char const *argv[]) {
         return 0;
     }
 
-    int cantidad;
     ifstream archivo;
 
     archivo.open(path);//direccion del archivo a leer
