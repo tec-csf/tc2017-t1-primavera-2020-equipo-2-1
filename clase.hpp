@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
-#include <stack>
 #include <cstdio>
 #include <string>
+#include <stack>
 
 using namespace std;
 
@@ -18,17 +18,14 @@ class Codigo
 
   // method declaration (definition will be made in cpp)
   public:
-    // CONSTRUCTORES
     Codigo();
-
-    // Destructor (SOLO UNO)
     ~Codigo();
 
-    // type name(parameters);
-    void analizarComplejidad(ifstream &ref);
+    void analizarComplejidad(string *codigo, int numeroLineas);
 
   protected:
     string forLoop(string linea);
+    string whileLoop(string *codigo, int numero_lineas, int i);
     int identificarOE(string linea);
     bool isIn(string sub, string *array);
     bool isIn(char car, char *array);

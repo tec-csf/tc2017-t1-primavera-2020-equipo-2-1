@@ -1,8 +1,8 @@
 #include <iostream>
-#include <stack>
-#include <string>
 #include <fstream>
 #include <cstdio>
+#include <string>
+#include <stack>
 
 #include "clase.hpp"
 
@@ -36,9 +36,7 @@ Codigo::Codigo() {
 }
 
 // Destructor
-Codigo::~Codigo() {
-  // std::cout << "Goodbye " << title; // Optional
-}
+Codigo::~Codigo() { }
 
 void Codigo::analizarComplejidad(ifstream &ref) {
     int i = 0;
