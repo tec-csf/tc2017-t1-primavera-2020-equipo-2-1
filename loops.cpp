@@ -306,12 +306,54 @@ bool Codigo::isIn(char car, char *array) {
 }
 
 
-int main(){
+int main(int argc, char const *argv[]) {
+    string path = "";
+    string option =* (argv + 1);
+    if(option == "-i") {
+        path =* (argv + 2);
+    } else {
+        cout << "opcion '" + option + "' no encontrada" << endl;
+        return 0;
+    }
+
+    ifstream archivo;
+
+    archivo.open(path);//direccion del archivo a leer
+    if(archivo.fail()) {
+        cout << "Error, no se encontro el archivo" << endl;
+        return 0;
+    } else {
+      string s;
+      string line;
+
+      int tam = 0;
+      while(getline(archivo, line)) {
+        ++tam;
+      }
+
+      archivo.close();
+      archivo.open(path);
+
+      string de_archivo[tam];
+      int j = 0;
+
+      while(getline(archivo, line)) {
+          s += line;
+          if(s.at(0)==' '){
+              while(s.at(0)==' '){
+              s = s.substr(1,s.length());
+              }
+          }
+        de_archivo[j] = s;
+        s = "";
+        ++j;
+      }
+
+    archivo.close();
+
     Codigo a;
-    string testCode[11] = {"void A(int n){", "int i, j, k, s;", "s=0;", "for(i=1; i<n-1; i++){", "for(j=i+1; j<n; j++){", "for(k=1; k<j; k++){", "s=s+2;", "}", "}", "}", "}"};
-    string testCode2[9] = {"void imprime_arrego(int arreglo[], int n)", "{", "int i=0;", "while (i<n)", "{", "printf(\"El elemento \%d es \%d \\n\", i, arreglo[i]);", "++i;", "}", "}"};
 
-    a.analizarComplejidad(testCode2, 9);
-
+    a.analizarComplejidad(de_archivo, tam);
     return 0;
+  }
 }
