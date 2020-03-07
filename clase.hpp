@@ -6,8 +6,7 @@
 
 using namespace std;
 
-class Codigo
-{
+class Codigo {
   // variables (todo estos son privados)
   stack<string> loops_condiciones;
   stack<string> loops_condiciones_end;
@@ -21,12 +20,12 @@ class Codigo
     Codigo();
     ~Codigo();
 
-    void analizarComplejidad(string *codigo, int numeroLineas);
+    void analizarComplejidad(string *codigo, int num_lineas);
 
   protected:
     string forLoop(string linea);
     string whileLoop(string *codigo, int numero_lineas, int i);
-    int identificarOE(string linea);
+    int identificar_OE(string linea);
     bool isIn(string sub, string *array);
     bool isIn(char car, char *array);
 

@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
-#include <stack>
 #include <cstdio>
 #include <string>
+#include <stack>
 
 
 #include "clase.hpp"
