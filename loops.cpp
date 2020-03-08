@@ -28,6 +28,7 @@ class Codigo {
     int identificar_OE(string linea);
     bool isIn(string sub, string *array);
     bool isIn(char car, char *array);
+    string eliminarEspacios(string linea);
 
   private:
 
@@ -118,6 +119,7 @@ void Codigo::analizarComplejidad(string *codigo, int num_lineas) {
     }
     printf("%s\n", "--------------------------------------------------------------------------------------------");
     cout << endl;
+
     cout << "Polinomio: " << polinomio << '\n' << endl;
 }
 
@@ -185,6 +187,9 @@ string Codigo::forLoop(string linea) {
         expresion+= "/" + salto;
         iteraciones+= ")/" + salto;
     }
+
+    iteraciones = eliminarEspacios(iteraciones); 
+    expresion = eliminarEspacios(expresion);
 
     loops_condiciones.push(iteraciones);
     loops_condiciones_end.push(iteraciones);
@@ -266,6 +271,9 @@ string Codigo::whileLoop(string *codigo, int numero_lineas, int i){
         iteraciones+= ")/" + salto;
     }
 
+    iteraciones = eliminarEspacios(iteraciones); 
+    expresion = eliminarEspacios(expresion);
+
     loops_condiciones.push(iteraciones);
     loops_condiciones_end.push(iteraciones);
 
@@ -305,6 +313,15 @@ bool Codigo::isIn(char car, char *array) {
     return false;
 }
 
+string Codigo::eliminarEspacios(string linea) {
+    string temp = ""; 
+    for (int i=0; i<linea.length(); i++){
+        if (linea.at(i) != ' '){
+            temp+= linea.at(i);
+        }
+    } 
+    return temp; 
+}
 
 int main(int argc, char const *argv[]) {
     string path = "";
