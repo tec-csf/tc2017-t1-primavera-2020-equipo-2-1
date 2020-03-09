@@ -15,5 +15,5 @@ install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 script:
-  - clang++ funciones.cpp complejidad.cpp -o tarea1
+  - g++ funciones.cpp complejidad.cpp -o tarea1
   - ./tarea1 -i fuentedensa.cpp
