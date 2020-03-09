@@ -16,6 +16,9 @@ int contador_OE(string line);
 // Regresa polinomio con la complejidad de línea actual
 string analizar_complejidad(string &line, string &poli, vector<string> &fuente, int const &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
 
+// Analiza complejidad de if/elses
+// string if_condition(vector<string> &fuente, int &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
+
 // Analiza la complejidad del for
 string for_loop(string &linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
 

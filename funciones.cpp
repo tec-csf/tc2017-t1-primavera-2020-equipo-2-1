@@ -20,11 +20,14 @@ void imprimir_raw(ifstream &archivo) {
 void llenar(vector<string> &fuente, ifstream &archivo) {
   string str;
   while(getline(archivo, str)) {
-    if(str[0] == ' ') {
-      while(str[0] == ' ')
-        str = str.substr(1, str.length());
-    }
-    fuente.emplace_back(str);
+    if(str.find_first_not_of(' ') != std::string::npos) {
+      if(str[0] == ' ') {
+        while(str[0] == ' ')
+          str = str.substr(1, str.length());
+      }
+      fuente.__emplace_back(str);
+    } else
+      fuente.__emplace_back(" ");
   }
 }
 
@@ -58,7 +61,7 @@ int contador_OE(string line) {
 }
 
 
-string analizar_complejidad(string &line, string &poli, vector<string> &fuente, int const &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end) {
+string analizar_complejidad(string &line, string &poli, vector<string> &fuente, int &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end) {
   string::const_iterator i;
   string complejidad_linea;
   int flag = 0;
@@ -83,13 +86,23 @@ string analizar_complejidad(string &line, string &poli, vector<string> &fuente, 
     loops_condiciones.pop();
     return complejidad_linea;
   }
+  // else if (line.find("if(") != string::npos || line.find("if (") != string::npos){
+  //     complejidad_linea = if_condition(fuente, num_linea, loops_condiciones, loops_condiciones_end);
+  //     if (poli.length() > 0 && poli.at(poli.length() - 1) != '(') {
+  //         poli += "+";
+  //     }
+  //     poli+= complejidad_linea;
+  //     return to_string(contador_OE(line));
+  // }
   else if(line.at(0) == '}') {
     if (loops_condiciones_end.size() > 0) {
         poli += ")";
         loops_condiciones_end.pop();
     }
     return "0";
-  } else {
+  } else if(line.size() == 0)
+    return "0";
+  else {
     complejidad_linea = to_string(contador_OE(line));
 
     if (poli.length() > 0 && poli.at(poli.length()-1) != '(')
@@ -98,6 +111,46 @@ string analizar_complejidad(string &line, string &poli, vector<string> &fuente, 
     return complejidad_linea;
   }
 }
+
+
+// string if_condition(vector<string> &fuente, int &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end) {
+//     string expresion = "";
+//     vector<string> opcion_de_expresion;
+//     stack<int> llaves_if_actual;
+//     int inicio_ifelse = num_linea;
+//
+//     for(int final_ifelse = inicio_ifelse; final_ifelse < fuente.size(); ++final_ifelse) {
+//         if(fuente[final_ifelse].at(fuente[final_ifelse].length() - 2) == '{')
+//             llaves_if_actual.push(1);
+//         if(final_ifelse > inicio_ifelse && llaves_if_actual.size() == 0){
+//             string temp = "";
+//             string poli2 = "";
+//             int sub_codigo_size = final_ifelse - inicio_ifelse - 1;
+//             string sub_codigo[sub_codigo_size];
+//
+//             expresion += to_string(contador_OE(fuente[inicio_ifelse])) + "+";
+//             for (int j = inicio_ifelse + 1, k = 0; j < final_ifelse; ++j, ++k)
+//                 // sub_codigo[k] = fuente[j];
+//                 temp += analizar_complejidad(fuente[j], poli2, fuente, j, loops_condiciones, loops_condiciones_end);
+//             // temp += complejidad(sub_codigo, sub_codigo_size, inicio_ifelse);
+//             // cout << "\n temp: " << temp << '\n';
+//             opcion_de_expresion.push_back(temp);
+//
+//             if (fuente[final_ifelse].substr(1, 4).compare("else") == 0 || fuente[final_ifelse].substr(2, 4).compare("else") == 0 || fuente[final_ifelse+1].substr(0, 4).compare("else") == 0){
+//                 inicio_ifelse = final_ifelse;
+//             } else {
+//                 num_linea = final_ifelse;
+//                 break;
+//             }
+//         }
+//         if(fuente[final_ifelse].at(0) == '}')
+//             llaves_if_actual.pop();
+//     }
+//
+//     expresion+= opcion_de_expresion[0];
+//     // cout << "\n expresion: " << expresion << '\n';
+//     return expresion;
+// }
 
 
 string for_loop(string &linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end) {
