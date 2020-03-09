@@ -20,14 +20,13 @@ void imprimir_raw(ifstream &archivo) {
 void llenar(vector<string> &fuente, ifstream &archivo) {
   string str;
   while(getline(archivo, str)) {
-    if(str.find_first_not_of(' ') != std::string::npos) {
+    if(str.find_first_not_of(' ') != string::npos) {
       if(str[0] == ' ') {
         while(str[0] == ' ')
           str = str.substr(1, str.length());
       }
       fuente.__emplace_back(str);
-    } else
-      fuente.__emplace_back(" ");
+    }
   }
 }
 
