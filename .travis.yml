@@ -6,13 +6,14 @@ dist: trusty
 
 before_install:
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-add-repository "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-6.0 main"
+  - if [ "$CXX" == "clang++" ]; then sudo add-apt-repository -y ppa:h-rayflood/llvm; fi
   - sudo apt-get update -qq
 
 install: 
   - sudo apt-get install -qq g++-6
-  - sudo apt-get install clang-6.0
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+  - if [ "$CXX" == "clang++" ]; then sudo apt-get install --allow-unauthenticated -qq clang-3.4; fi
+  - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.4"; fi
 
 script: 
   - clang++ clase.cpp complejidad.cpp -o tarea
