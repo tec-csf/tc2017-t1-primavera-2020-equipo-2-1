@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <string>
 #include <stack>
+#include <vector>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ class Codigo {
   string comps_compuestos[4];
   char ops_simples[6];
   char comps_simples[3];
+  int linea_actual = 0; 
 
   // method declaration (definition will be made in cpp)
   public:
@@ -23,8 +25,10 @@ class Codigo {
     void analizarComplejidad(string *codigo, int num_lineas);
 
   protected:
+    string complejidad(string *codigo, int num_lineas, int i_real);
     string forLoop(string linea);
     string whileLoop(string *codigo, int numero_lineas, int i);
+    string ifCondition(string *codigo, int numero_lineas, int i); 
     int identificar_OE(string linea);
     bool isIn(string sub, string *array);
     bool isIn(char car, char *array);
@@ -60,26 +64,40 @@ Codigo::Codigo() {
 // Destructor
 Codigo::~Codigo() { }
 
-void Codigo::analizarComplejidad(string *codigo, int num_lineas) {
-    string polinomio;
-    int numeroLoops = loops_condiciones.size();
+void Codigo::analizarComplejidad(string *codigo, int num_lineas){
+    string polinomio = "";
 
     printf("%-5s || %-55s || %-50s \n", "Línea", "Código", "OE" );
     printf("%s\n", "--------------------------------------------------------------------------------------------");
 
-    for(int i = 0; i < num_lineas; ++i) {
+    polinomio = complejidad(codigo, num_lineas, 0);
+
+    printf("%s\n", "--------------------------------------------------------------------------------------------");
+    cout << endl;
+
+    cout << "Polinomio: " << polinomio  << '\n' << endl;
+}
+
+string Codigo::complejidad(string *codigo, int num_lineas, int i_real) {
+    string polinomio;
+    int numeroLoops = loops_condiciones.size();
+
+    //printf("%-5s || %-55s || %-50s \n", "Línea", "Código", "OE" );
+    //printf("%s\n", "--------------------------------------------------------------------------------------------");
+
+    for(int i = 0, j = i_real; i < num_lineas; ++i, ++j) {
         string complejidadLinea = "";
 
         if (codigo[i].substr(0,4).compare("void") == 0) {
 
-            printf("%- 5d || %-54s ||\n", i + 1, codigo[i].c_str());
-            // cout << "(" << i + 1 << ")\t" << codigo[i] << endl;
+            printf("%- 5d || %-54s ||\n", j + 1, codigo[i].c_str());
+            //cout << "(" << i + 1 << ")\t" << codigo[i] << endl;
         }
         else if(codigo[i].substr(0, 4).compare("for(") == 0 || codigo[i].substr(0, 5).compare("for (") == 0) {
             complejidadLinea = forLoop(codigo[i]);
 
-            printf("%- 5d || %-54s || %-49s \n", i + 1, codigo[i].c_str(), complejidadLinea.c_str());
-            // cout << "(" <<i+1<<")\t"<<codigo[i]<<"\tOE: "<<complejidadLinea<<endl;
+            printf("%- 5d || %-54s || %-49s \n", j + 1, codigo[i].c_str(), complejidadLinea.c_str());
+            //cout << "(" <<i+1<<")\t"<<codigo[i]<<"\tOE: "<<complejidadLinea<<endl;
 
             if (polinomio.length() > 0 && polinomio.at(polinomio.length()-1) != '(') {
                 polinomio += "+";
@@ -90,8 +108,8 @@ void Codigo::analizarComplejidad(string *codigo, int num_lineas) {
         else if (codigo[i].substr(0, 6).compare("while(") == 0 || codigo[i].substr(0, 7).compare("while (") == 0) {
             complejidadLinea = whileLoop(codigo, num_lineas, i);
 
-            printf("%- 5d || %-54s || %-49s \n", i + 1, codigo[i].c_str(), complejidadLinea.c_str());
-            // cout<<"("<<i+1<<")\t"<<codigo[i]<<"\tOE: "<<complejidadLinea<<endl;
+            printf("%- 5d || %-54s || %-49s \n", j + 1, codigo[i].c_str(), complejidadLinea.c_str());
+            //cout<<"("<<i+1<<")\t"<<codigo[i]<<"\tOE: "<<complejidadLinea<<endl;
 
             if (polinomio.length()>0 && polinomio.at(polinomio.length()-1) !='('){
                 polinomio+= "+";
@@ -99,17 +117,31 @@ void Codigo::analizarComplejidad(string *codigo, int num_lineas) {
             polinomio+= complejidadLinea + "+(" + loops_condiciones.top() + ")(";
             loops_condiciones.pop();
         }
+        else if (codigo[i].substr(0, 3).compare("if(") == 0 || codigo[i].substr(0, 4).compare("if (") == 0){
+            complejidadLinea = ifCondition(codigo, num_lineas, i); 
+
+            printf("%- 5d || %-54s || %-49s \n", j + 1, codigo[i].c_str(), to_string(identificar_OE(codigo[i])).c_str());
+            //cout<<"("<<i+1<<")\t"<<codigo[i]<<"\tOE: "<<to_string(identificar_OE(codigo[i]))<<endl;
+
+            if (polinomio.length() > 0 && polinomio.at(polinomio.length()-1) != '(') {
+                polinomio+= "+";
+            }
+            polinomio+= complejidadLinea;
+
+            i = linea_actual;
+            j = linea_actual; 
+        }
         else if (codigo[i].at(0) == '}') {
-            printf("%- 5d || %-54s ||\n", i + 1, codigo[i].c_str());
-            // cout<<"("<<i+1<<")\t"<<codigo[i]<<endl;
+            printf("%- 5d || %-54s ||\n", j + 1, codigo[i].c_str());
+            //cout<<"("<<i+1<<")\t"<<codigo[i]<<endl;
             if (loops_condiciones_end.size() > 0) {
                 polinomio += ")";
                 loops_condiciones_end.pop();
             }
         } else {
             complejidadLinea = to_string(identificar_OE(codigo[i]));
-            printf("%- 5d || %-54s || %-49s \n", i + 1, codigo[i].c_str(), complejidadLinea.c_str());
-            // cout<<"("<<i+1<<")\t"<<codigo[i]<<"\tOE: "<<complejidadLinea<<endl;
+            printf("%- 5d || %-54s || %-49s \n", j + 1, codigo[i].c_str(), complejidadLinea.c_str());
+            //cout<<"("<<i+1<<")\t"<<codigo[i]<<"\tOE: "<<complejidadLinea<<endl;
 
             if (polinomio.length() > 0 && polinomio.at(polinomio.length()-1) != '(') {
                 polinomio+= "+";
@@ -117,10 +149,11 @@ void Codigo::analizarComplejidad(string *codigo, int num_lineas) {
             polinomio+= complejidadLinea;
         }
     }
-    printf("%s\n", "--------------------------------------------------------------------------------------------");
-    cout << endl;
+    //printf("%s\n", "--------------------------------------------------------------------------------------------");
+    //cout << endl;
 
-    cout << "Polinomio: " << polinomio << '\n' << endl;
+    //cout << "Polinomio: " << polinomio << '\n' << endl;
+    return polinomio; 
 }
 
 string Codigo::forLoop(string linea) {
@@ -280,6 +313,41 @@ string Codigo::whileLoop(string *codigo, int numero_lineas, int i){
     return expresion;
 }
 
+string Codigo::ifCondition(string *codigo, int numero_lineas, int i){
+    string expresion = "";
+    vector<string> opcion_de_expresion; 
+    stack<int> llaves_if_actual; 
+
+    int inicio_ifelse = i; 
+    for(int final_ifelse = inicio_ifelse; final_ifelse < numero_lineas; ++final_ifelse) {
+        if(codigo[final_ifelse].at(0) == '}')
+            llaves_if_actual.pop();
+        if(final_ifelse > inicio_ifelse && llaves_if_actual.size() == 0){
+            string temp = ""; 
+            int sub_codigo_size = final_ifelse - inicio_ifelse - 1; 
+            string sub_codigo[sub_codigo_size]; 
+
+            expresion+= to_string(identificar_OE(codigo[inicio_ifelse])) + "+"; 
+            for (int j=inicio_ifelse+1, k=0; j<final_ifelse; j++, k++){
+                sub_codigo[k] = codigo[j]; 
+            }
+            temp+= complejidad(sub_codigo, sub_codigo_size, inicio_ifelse);
+            opcion_de_expresion.push_back(temp); 
+
+            if (codigo[final_ifelse].substr(1, 4).compare("else") == 0 || codigo[final_ifelse].substr(2, 4).compare("else") == 0 || codigo[final_ifelse+1].substr(0, 4).compare("else") == 0){
+                inicio_ifelse = final_ifelse; 
+            } else {
+                linea_actual = final_ifelse; 
+                break; 
+            }
+        }
+        if(codigo[final_ifelse].at(codigo[final_ifelse].length()-2) == '{')
+            llaves_if_actual.push(1);
+    }
+
+    expresion+= opcion_de_expresion[0];
+    return expresion;  
+}
 
 int Codigo::identificar_OE(string linea) {
     int num = 0;
