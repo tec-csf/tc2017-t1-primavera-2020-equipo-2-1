@@ -25,9 +25,9 @@ void llenar(vector<string> &fuente, ifstream &archivo) {
         while(str[0] == ' ')
           str = str.substr(1, str.length());
       }
-      fuente.__emplace_back(str);
+      fuente.emplace_back(str);
     } else
-      fuente.__emplace_back(" ");
+      fuente.emplace_back(" ");
   }
 }
 
@@ -379,4 +379,38 @@ void imprimir_tabla(vector<string> &fuente) {
 
   printf(" %s\n", "---------------------------------------------------------------------------------------------------------");
   cout << "\n Polinomio: " << poli << '\n';
+}
+
+
+
+int main(int argc, char const *argv[]) {
+  string opcion = *(argv + 1);
+  string path;
+
+  if (opcion == "-i") {
+    path = *(argv + 2);
+  } else {
+    cout << "Comando \"" << opcion << "\"" << "no reconocido." << endl;
+    return 0;
+  }
+
+  ifstream archivo_fuente;
+
+  archivo_fuente.open(path);
+  if(archivo_fuente.fail()) {
+    cout << "Error, no se encontró el código fuente" << endl;
+    return 0;
+  } else {
+    imprimir_raw(archivo_fuente);
+    archivo_fuente.close();
+    archivo_fuente.open(path);
+    vector<string> fuente;
+
+    llenar(fuente, archivo_fuente);
+    archivo_fuente.close();
+
+    imprimir_tabla(fuente);
+
+    return 0;
+  }
 }
