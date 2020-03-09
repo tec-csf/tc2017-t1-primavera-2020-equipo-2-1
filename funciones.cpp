@@ -58,9 +58,7 @@ int contador_OE(string line) {
 }
 
 
-string analizar_complejidad(string &line, string &poli, vector<string> &fuente, int const &num_linea) {
-  stack<string> loops_condiciones;
-  stack<string> loops_condiciones_end;
+string analizar_complejidad(string &line, string &poli, vector<string> &fuente, int const &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end) {
   string::const_iterator i;
   string complejidad_linea;
   int flag = 0;
@@ -87,9 +85,8 @@ string analizar_complejidad(string &line, string &poli, vector<string> &fuente, 
   }
   else if(line.at(0) == '}') {
     if (loops_condiciones_end.size() > 0) {
-        // poli += ")";
-        // loops_condiciones_end.pop();
-        return "0w";
+        poli += ")";
+        loops_condiciones_end.pop();
     }
     return "0";
   } else {
@@ -316,6 +313,8 @@ string eliminar_espacios(string &linea) {
 
 
 void imprimir_tabla(vector<string> &fuente) {
+  stack<string> loops_condiciones;
+  stack<string> loops_condiciones_end;
   string poli;
 
   printf("%s\n", " _________________________________________________________________________________________________________");
@@ -323,7 +322,7 @@ void imprimir_tabla(vector<string> &fuente) {
   printf(" %s\n", "|-------------------------------------------------------------------------------------------------------|");
 
   for (int i = 0; i < fuente.size(); ++i)
-    printf(" |%- 5d || %-54s || %-35s |\n", i, fuente[i].c_str(), analizar_complejidad(fuente[i], poli, fuente, i).c_str());
+    printf(" |%- 5d || %-54s || %-35s |\n", i, fuente[i].c_str(), analizar_complejidad(fuente[i], poli, fuente, i, loops_condiciones, loops_condiciones_end).c_str());
 
   printf(" %s\n", "---------------------------------------------------------------------------------------------------------");
   cout << "\n Polinomio: " << poli << '\n';
