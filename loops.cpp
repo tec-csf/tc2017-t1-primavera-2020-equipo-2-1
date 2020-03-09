@@ -143,7 +143,7 @@ string Codigo::complejidad(string *codigo, int num_lineas, int i_real) {
             printf("%- 5d || %-54s || %-49s \n", j + 1, codigo[i].c_str(), complejidadLinea.c_str());
             //cout<<"("<<i+1<<")\t"<<codigo[i]<<"\tOE: "<<complejidadLinea<<endl;
 
-            if (polinomio.length() > 0 && polinomio.at(polinomio.length()-1) != '(') {
+            if (polinomio.length() > 0 && polinomio.at(polinomio.length()-1) != '(' && polinomio.at(polinomio.length()-1) != '+') {
                 polinomio+= "+";
             }
             polinomio+= complejidadLinea;
@@ -330,12 +330,16 @@ string Codigo::ifCondition(string *codigo, int numero_lineas, int i){
             expresion+= to_string(identificar_OE(codigo[inicio_ifelse])) + "+"; 
             for (int j=inicio_ifelse+1, k=0; j<final_ifelse; j++, k++){
                 sub_codigo[k] = codigo[j]; 
+                cout<<sub_codigo[k]<<endl;
             }
             temp+= complejidad(sub_codigo, sub_codigo_size, inicio_ifelse);
             opcion_de_expresion.push_back(temp); 
 
-            if (codigo[final_ifelse].substr(1, 4).compare("else") == 0 || codigo[final_ifelse].substr(2, 4).compare("else") == 0 || codigo[final_ifelse+1].substr(0, 4).compare("else") == 0){
+            if (codigo[final_ifelse].substr(1, 4).compare("else") == 0 || codigo[final_ifelse].substr(2, 4).compare("else") == 0){
                 inicio_ifelse = final_ifelse; 
+            } else if (codigo[final_ifelse+1].substr(0, 4).compare("else") == 0){
+                final_ifelse++; 
+                inicio_ifelse = final_ifelse;
             } else {
                 linea_actual = final_ifelse; 
                 break; 
