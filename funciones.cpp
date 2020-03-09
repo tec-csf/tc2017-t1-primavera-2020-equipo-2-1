@@ -91,9 +91,9 @@ string analizar_complejidad(string &line, string &poli, vector<string> &fuente, 
   //     if (poli.length() > 0 && poli.at(poli.length() - 1) != '(') {
   //         poli += "+";
   //     }
-  //     poli+= complejidad_linea;
+  //     poli += complejidad_linea;
   //     return to_string(contador_OE(line));
-  // }
+  }
   else if(line.at(0) == '}') {
     if (loops_condiciones_end.size() > 0) {
         poli += ")";
