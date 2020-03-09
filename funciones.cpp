@@ -24,7 +24,7 @@ void llenar(vector<string> &fuente, ifstream &archivo) {
       while(str[0] == ' ')
         str = str.substr(1, str.length());
     }
-    fuente.__emplace_back(str);
+    fuente.emplace_back(str);
   }
 }
 
