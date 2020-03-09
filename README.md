@@ -1,3 +1,6 @@
+# *clang++ complejidad.cpp funciones.cpp -o tarea1*
+# *./tarea1 -i fuentedensa.cpp*
+
 # Tarea *1*. *Complejidad Computacional*
 
 ---

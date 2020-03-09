@@ -1,16 +1,19 @@
 language: cpp
-compiler: 
+compiler:
   -gcc
+  -clang
 dist: trusty
 
 before_install:
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - if [ "$CXX" == "clang++" ]; then sudo add-apt-repository -y ppa:h-rayflood/llvm; fi
   - sudo apt-get update -qq
 
-install: 
+install:
   - sudo apt-get install -qq g++-6
+  - sudo apt-get install clang
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
-script: 
-  - g++ clase.cpp complejidad.cpp -o tarea
-  - ./tarea -i fuente3.cpp
+script:
+  - clang++ funciones.cpp complejidad.cpp -o tarea1
+  - ./tarea1 -i fuentedensa.cpp

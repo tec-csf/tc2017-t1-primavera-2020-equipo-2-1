@@ -1,62 +1,42 @@
-#include <iostream>
-#include <fstream>
-#include <cstdio>
-#include <string>
+#include <iostream> // cin y cout
+#include <fstream>  // archivos
+#include <string>   // substr()
+#include <cstdio>   // printf()
 #include <stack>
-
-#include "clase.hpp"
+#include <vector>
+#include "funciones.hpp"
 
 using namespace std;
 
 
 int main(int argc, char const *argv[]) {
-    string path = "";
-    string option =* (argv + 1);
-    if(option == "-i") {
-        path =* (argv + 2);
-    } else {
-        cout << "opcion '" + option + "' no encontrada" << endl;
-        return 0;
-    }
+  string opcion = *(argv + 1);
+  string path;
 
-    ifstream archivo;
+  if (opcion == "-i") {
+    path = *(argv + 2);
+  } else {
+    cout << "Comando \"" << opcion << "\"" << "no reconocido." << endl;
+    return 0;
+  }
 
-    archivo.open(path);//direccion del archivo a leer
-    if(archivo.fail()) {
-        cout << "Error, no se encontro el archivo" << endl;
-        return 0;
-    } else {
-      string s;
-      string line;
+  ifstream archivo_fuente;
 
-      int tam = 0;
-      while(getline(archivo, line)) {
-        ++tam;
-      }
+  archivo_fuente.open(path);
+  if(archivo_fuente.fail()) {
+    cout << "Error, no se encontró el código fuente" << endl;
+    return 0;
+  } else {
+    imprimir_raw(archivo_fuente);
+    archivo_fuente.close();
+    archivo_fuente.open(path);
+    vector<string> fuente;
 
-      archivo.close();
-      archivo.open(path);
+    llenar(fuente, archivo_fuente);
+    archivo_fuente.close();
 
-      string de_archivo[tam];
-      int j = 0;
+    imprimir_tabla(fuente);
 
-      while(getline(archivo, line)) {
-          s += line;
-          if(s.at(0)==' '){
-              while(s.at(0)==' '){
-              s = s.substr(1,s.length());
-              }
-          }
-        de_archivo[j] = s;
-        s = "";
-        ++j;
-      }
-
-    archivo.close();
-
-    Codigo a;
-
-    a.analizarComplejidad(de_archivo, tam);
     return 0;
   }
 }
