@@ -7,7 +7,6 @@
 #include "funciones.hpp"
 
 using namespace std;
-
 void imprimir_raw(ifstream &archivo) {
   cout << "\n  CÓDIGO FUENTE: \n\n";
   string line;
@@ -50,10 +49,10 @@ int contador_OE(string line) {
           flag = 0;
   }
 
-  if(line.find("return") != string::npos || line.find("&&") != string::npos || line.find("||") != string::npos)
+  if(line.find("return") != string::npos || line.find("&&") != string::npos || line.find("||") != string::npos|| line.find("cout") != string::npos)
       ++conta;
   if(line.find("<<") != string::npos || line.find("#include") != string::npos || line.find("void") != string::npos)
-      conta -= 3;
+      conta -= 2;
   if(conta < 0)
     conta = 0;
 
@@ -86,11 +85,14 @@ string analizar_complejidad(string &line, string &poli, vector<string> &fuente, 
     loops_condiciones.pop();
     return complejidad_linea;
   }
-  // else if (line.find("if(") != string::npos || line.find("if (") != string::npos){
-  //     complejidad_linea = if_condition(fuente, num_linea, loops_condiciones, loops_condiciones_end);
-  //     if (poli.length() > 0 && poli.at(poli.length() - 1) != '(') {
-  //         poli += "+";
-  //     }
+  else if (line.find("if(") != string::npos || line.find("if (") != string::npos || line.find("else") != string::npos || line.find("else{") != string::npos){
+  complejidad_linea=to_string(contador_OE(line));
+  if_condicion(fuente, num_linea,loops_condiciones, loops_condiciones_end);
+  return complejidad_linea;
+  }
+   /*   if (poli.length() > 0 && poli.at(poli.length() - 1) != '(') {
+   //       poli += "+";
+   //   }
   //     poli += complejidad_linea;
   //     return to_string(contador_OE(line));
   // }
@@ -102,6 +104,7 @@ string analizar_complejidad(string &line, string &poli, vector<string> &fuente, 
     return "0";
   } else if(line.size() == 0)
     return "0";
+    */
   else {
     complejidad_linea = to_string(contador_OE(line));
 
@@ -111,8 +114,32 @@ string analizar_complejidad(string &line, string &poli, vector<string> &fuente, 
     return complejidad_linea;
   }
 }
+void if_condicion(vector<string>& fuente, int num_linea,stack<string>& loops_condiciones, stack<string>& loops_condiciones_end){
+  stack<char> capas;
+  string poli_temp, poli_complejo;
+  string complejidad_linea;
+  poli_complejo="";
+  bool atorado= false;
+  int linea_atorada;
+  capas.push('{');
+  ++num_linea;
+  while(!capas.empty()){
+    poli_temp= analizar_complejidad(fuente[num_linea],poli_temp,fuente, num_linea, loops_condiciones,loops_condiciones_end);
+    poli_complejo+=poli_temp+"+";
+    if(fuente[num_linea].find('{')!= string::npos){
+      capas.push('{');
+    }
+    else if(fuente[num_linea].find('}')!= string::npos){
+      capas.pop();
+    }
 
-
+    ++num_linea;
+  }
+  poli_temp=poli_complejo;
+  poli_complejo=poli_temp.substr(0,poli_temp.size()-1);
+  //cout<<poli_complejo<<endl;
+  poli_ifs.emplace_back(poli_complejo);
+}
 // string if_condition(vector<string> &fuente, int &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end) {
 //     string expresion = "";
 //     vector<string> opcion_de_expresion;
@@ -410,7 +437,6 @@ int main(int argc, char const *argv[]) {
     archivo_fuente.close();
 
     imprimir_tabla(fuente);
-
     return 0;
   }
 }

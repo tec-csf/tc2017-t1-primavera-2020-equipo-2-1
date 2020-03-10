@@ -1,3 +1,5 @@
+class subif{
+  public:
 string analizar_complejidad(string &line, string &poli, vector<string> &fuente, int &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end) {
 //
 //
@@ -46,7 +48,7 @@ string if_condicion(vector<string>& fuente, int num_linea) {
     if(fuente[num_linea].find("else if") || fuente[num_linea + 1].find("else if")) {
       poli_temp = "";
       capas.push('{');
-      inicio analisis del if else
+     // inicio analisis del if else
       while(!capas.empty()) {
         fuente[num_linea + 1].analizar_complejidad_if(poli_temp); // funcion auxiliar (NO RECURSIVO PRQUE ESTA CAÑON)
         if(fuente[num_linea + 1].find('{')) {
@@ -80,3 +82,4 @@ string if_condicion(vector<string>& fuente, int num_linea) {
       return poli_complejo;
     }
   }
+}
