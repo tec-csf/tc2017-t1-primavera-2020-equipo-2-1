@@ -99,7 +99,7 @@ bool is_in(string sub, int const &opcion);
  * @param &loops_condiciones_end: auxiliar en mantener los ciclos anidados.
  *
  */
-string analizar_complejidad_if(string &line, vector<string> &fuente, int num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
+string analizar_complejidad_if(string &line, vector<string> &fuente, int &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
 
 
 /* Limpia polinomios para mejor interpretación,
