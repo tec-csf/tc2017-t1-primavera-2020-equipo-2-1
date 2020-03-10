@@ -4,7 +4,11 @@
 
 using namespace std;
 
-// Imprime el código fuente como esta en .cpp
+/* Imprime el código fuente como se encuentra en su archivo
+ *
+ * @param &archivo: es la referencia del archivo que se lee desde la terminal
+ *
+ */
 void imprimir_raw(ifstream &archivo);
 
 // Pasa a un vector cada línea del código fuente, sin espacios iniciales, para su análisis
@@ -17,15 +21,13 @@ int contador_OE(string line);
 string analizar_complejidad(string &line, string &poli, vector<string> &fuente, int const &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
 
 // Analiza complejidad de if/elses
-// string if_condition(vector<string> &fuente, int &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
+void if_condicion(vector<string> &fuente, int num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
 
 // Analiza la complejidad del for
 string for_loop(string &linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
 
 // Analiza la complejidad del while
 string while_loop(vector<string> &fuente, int const &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
-
-void if_condicion(vector<string> &fuente, int num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
 
 // Auxiliares en for_loop y while_loop
 bool is_in(char car, int const &opcion);
