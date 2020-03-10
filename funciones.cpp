@@ -85,14 +85,14 @@ string analizar_complejidad(string &line, string &poli, vector<string> &fuente, 
     loops_condiciones.pop();
     return complejidad_linea;
   }
-  // else if (line.find("if(") != string::npos || line.find("if (") != string::npos){
-  //     complejidad_linea = if_condition(fuente, num_linea, loops_condiciones, loops_condiciones_end);
-  //     if (poli.length() > 0 && poli.at(poli.length() - 1) != '(') {
-  //         poli += "+";
-  //     }
-  //     poli += complejidad_linea;
-  //     return to_string(contador_OE(line));
-  // }
+  else if (line.find("if(") != string::npos || line.find("if (") != string::npos){
+      complejidad_linea = if_condition(fuente, num_linea, loops_condiciones, loops_condiciones_end);
+      if (poli.length() > 0 && poli.at(poli.length() - 1) != '(') {
+          poli += "+";
+      }
+      poli += complejidad_linea;
+      return to_string(contador_OE(line));
+  }
   else if(line.at(0) == '}') {
     if (loops_condiciones_end.size() > 0) {
         poli += ")";
@@ -112,7 +112,67 @@ string analizar_complejidad(string &line, string &poli, vector<string> &fuente, 
 }
 
 
-void if_condicion(string &poli, vector<string> &fuente, int num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end) { }
+string if_condicion(vector<string> &fuente, int num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end) {
+  vector<string> poli_ifs;
+  stack<char> capas;
+  string poli_temp, poli_complejo;
+  bool atorado = true;
+
+  capas.push('{');
+  while (!capas.empty()) {
+    poli_temp = analizar_complejidad_if(fuente[num_linea + 1]);
+    if(fuente[num_linea + 1].find('{')) {
+      capas.push('{');
+    }
+    else if(fuente[num_linea + 1].find('}')) {
+      capas.pop('}');
+    }
+    ++num_linea;
+  }
+  poli_ifs.__emplace_back(poli_temp);
+
+  while(atorado) { //estara atorado hasta que ya no haya if elses
+    // si hay un else if, hara lo siguiente:
+    if(fuente[num_linea].find("else if") != string::npos || fuente[num_linea + 1].find("else if") != string::npos) {
+      poli_temp = "";
+      capas.push('{');
+     // inicio analisis del if else
+      while(!capas.empty()) {
+        poli_temp = analizar_complejidad_if(fuente[num_linea + 1]);
+        if(fuente[num_linea + 1].find('{')) {
+          capas.push('{');
+        }
+        else if(fuente[num_linea + 1].find('}')) {
+          capas.pop('}');
+        }
+        ++num_linea;
+      }// fin; hasta aqui tendremos un string (poli_temp) con la complejidad de todo el if
+
+      poli_ifs.__emplace_back(poli_temp);// se guarda al vector
+    }
+    // si no hay else if, checara esto
+    else if(fuente[num_linea].find("else") != string::npos || fuente[num_linea + 1].find("else") != string::npos) {
+      poli_temp = "";
+      capas.push('{');
+      while(!capas.empty()) {
+        poli_temp = analizar_complejidad_if(fuente[num_linea + 1]);
+        if(fuente[num_linea + 1].find('{')) {
+          capas.push('{');
+        }
+        else if(fuente[num_linea + 1].find('}')) {
+          capas.pop('}');
+        }
+        ++num_linea;
+      }
+      poli_ifs.__emplace_back(poli_temp);
+    } else {
+      // poli_complejo = el_mas_complejo(poli_ifs);
+      poli_complejo = poli_ifs[0];
+      atorado = false;
+      return poli_complejo;
+    }
+  }
+}
 
 
 string for_loop(string &linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end) {

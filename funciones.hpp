@@ -43,16 +43,16 @@ int contador_OE(string const &line);
  */
 string analizar_complejidad(string &line, string &poli, vector<string> &fuente, int const &num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
 
-/* Analiza complejidad de if/elses; modifica por referencia al polinomio final.
+
+/* Analiza complejidad de if/elses; regresa polinomio más complejo de if/elses.
  *
- * @param &poli: irá concatenando el polinomio de todo el código.
  * @param &fuente: vector que almacenará por espacio, una línea del código.
  * @param &num_linea: indice que indica osbre qué línea se está iterando.
  * @param &loops_condiciones: auxiliar en mantener los ciclos anidados.
  * @param &loops_condiciones_end: auxiliar en mantener los ciclos anidados.
  *
  */
-void if_condicion(string &poli, vector<string> &fuente, int num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
+string if_condicion(vector<string> &fuente, int num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
 
 
 /* Regresa polinomio con complejidad del for; modifica por referencia al polinomio final.
@@ -88,6 +88,14 @@ string while_loop(vector<string> &fuente, int const &num_linea, stack<string>& l
  */
 bool is_in(char car, int const &opcion);
 bool is_in(string sub, int const &opcion);
+
+
+/* Auxiliar en if_condicion; regresa complejidad de la.
+ *
+ * @param &line: contiene línea de código a interpretar.
+ *
+ */
+string analizar_complejidad_if(string &line);
 
 
 /* Limpia polinomios para mejor interpretación,
