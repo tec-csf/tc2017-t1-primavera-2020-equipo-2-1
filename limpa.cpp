@@ -8,20 +8,26 @@ using namespace std;
 
 string limpiador(){
     string s="0+1+1+(2)(((n-1-(1))+1)/2)+(2)((n-1-(1))/2)+((n-1-(1))/2)(logn+(logn)(1+(1)((j-(1))+1)+(1)(j-(1))+((j-(1)))(2)))";
-    
-    for(int i=0;i<2;i++){
+    for(int i=0;i<3;i++){
     int cont=0;
     int flag;
     bool flak=false;
     int length=s.length();
+    cout<<i<<" "<<s<<endl;
     while(cont<length-1){
         if(length-cont==0){
             s+=')';
+            cout<<"termina"<<endl;
             return s;
         }
         else{
-
         if(s.at(cont)=='('){
+            if(i==2){
+                 if(s.at(cont+2)==')'&&(s.at(cont-1)=='+'||s.at(cont-1)=='-')){
+                s.erase(s.begin()+cont);
+                s.erase(s.begin()+(cont+1));
+                }  
+            }
             if(s.at(cont+1)=='('){
                 flag=cont+1;
                 flak=true;
@@ -49,7 +55,6 @@ int main(){
  h.erase(h.begin());
  cout<<h<<endl;*/
  string s;
-
  s=limpiador();
  cout<<s<<endl;
 }
