@@ -4,7 +4,7 @@
 #include <cstdio>   // printf()
 #include <stack>
 #include <vector>
-
+#include "funciones2.hpp"
 using namespace std;
 
 void imprimir_raw(ifstream &archivo) {

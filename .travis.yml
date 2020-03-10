@@ -16,4 +16,4 @@ install:
 
 script:
   - g++ main.cpp -std=c++17 -o main
-  - ./main -i /examples/fuentedensa.cpp
+  - ./main -i examples/fuentedensa.cpp
