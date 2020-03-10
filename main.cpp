@@ -4,9 +4,9 @@
 #include <cstdio>   // printf()
 #include <stack>
 #include <vector>
-#include "funciones.hpp"
 
 using namespace std;
+
 void imprimir_raw(ifstream &archivo) {
   cout << "\n  CÓDIGO FUENTE: \n\n";
   string line;
@@ -114,6 +114,8 @@ string analizar_complejidad(string &line, string &poli, vector<string> &fuente, 
     return complejidad_linea;
   }
 }
+
+
 void if_condicion(vector<string>& fuente, int num_linea,stack<string>& loops_condiciones, stack<string>& loops_condiciones_end){
   stack<char> capas;
   string poli_temp, poli_complejo;

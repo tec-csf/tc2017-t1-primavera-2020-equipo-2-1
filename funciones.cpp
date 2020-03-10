@@ -25,7 +25,7 @@ void llenar(vector<string> &fuente, ifstream &archivo) {
         while(str[0] == ' ')
           str = str.substr(1, str.length());
       }
-      fuente.__emplace_back(str);
+      fuente.push_back(str);
     }
   }
 }
@@ -83,13 +83,17 @@ string analizar_complejidad(string &line, string &poli, vector<string> &fuente, 
     loops_condiciones.pop();
     return complejidad_linea;
   }
-  else if (line.find("if(") != string::npos || line.find("if (") != string::npos){
+  else if (line.find("if(") != string::npos || line.find("if (") != string::npos) {
+    if (line.find("else") != string::npos)
+      return to_string(contador_OE(line));
+    else {
       complejidad_linea = if_condicion(fuente, num_linea, loops_condiciones, loops_condiciones_end);
       if (poli.length() > 0 && poli.at(poli.length() - 1) != '(') {
           poli += "+";
       }
       poli += complejidad_linea;
       return to_string(contador_OE(line));
+    }
   }
   else if(line.at(0) == '}') {
     if (loops_condiciones_end.size() > 0) {
@@ -120,9 +124,11 @@ string if_condicion(vector<string> &fuente, int num_linea, stack<string>& loops_
 
   line_no = fuente[num_linea].find('{') != string::npos ? num_linea : num_linea + 1;
   capas.push('{');
+  cout << "\n lino if: " << line_no << '\n';
 
   while (!capas.empty()) {
     poli_temp += analizar_complejidad_if(fuente[line_no + 1], fuente, line_no + 1, loops_condiciones, loops_condiciones_end);
+    cout << "capas;;" << capas.top() << '\n';
     if(fuente[line_no + 1].find('{') != string::npos) {
       capas.push('{');
     }
@@ -131,12 +137,17 @@ string if_condicion(vector<string> &fuente, int num_linea, stack<string>& loops_
       --line_no;
     }
     ++line_no;
+    cout << "\n lino if inside: " << line_no << '\n';
+    cout << "\n if: " << poli_temp << '\n';
   }
-  poli_ifs.__emplace_back(poli_temp);
+  poli_ifs.push_back(poli_temp);
+  cout << "poli:: " << poli_ifs[0] << '\n';
 
   line_no = fuente[line_no].find('{') != string::npos ? line_no : line_no + 1;
+  cout << "\n lino elsif: " << line_no << '\n';
 
   while(atorado) { //estara atorado hasta que ya no haya if elses
+    cout << "\n true: " << fuente[line_no] << '\n';
     // si hay un else if, hara lo siguiente:
     if(fuente[line_no].find("else if") != string::npos) {
       poli_temp = "";
@@ -152,9 +163,10 @@ string if_condicion(vector<string> &fuente, int num_linea, stack<string>& loops_
           --line_no;
         }
         ++line_no;
+        cout << "\n elsif: " << poli_temp << '\n';
       }// fin; hasta aqui tendremos un string (poli_temp) con la complejidad de todo el if
 
-      poli_ifs.__emplace_back(poli_temp);// se guarda al vector
+      poli_ifs.push_back(poli_temp);// se guarda al vector
     }
     // si no hay else if, checara esto
     else if(fuente[line_no].find("else") != string::npos || fuente[line_no + 1].find("else") != string::npos) {
@@ -171,8 +183,9 @@ string if_condicion(vector<string> &fuente, int num_linea, stack<string>& loops_
           --line_no;
         }
         ++line_no;
+        cout << "\n else: " << poli_temp << '\n';
       }
-      poli_ifs.__emplace_back(poli_temp);
+      poli_ifs.push_back(poli_temp);
     } else {
       // poli_complejo = el_mas_complejo(poli_ifs);
       poli_complejo = poli_ifs[0];
@@ -405,7 +418,7 @@ string analizar_complejidad_if(string &line, vector<string> &fuente, int num_lin
     complejidad_condicion += complejidad_linea + "+(" + loops_condiciones.top() + ")(";
     loops_condiciones.pop();
   }
-  else if (line.find("if(") != string::npos || line.find("if (") != string::npos){
+  else if (line.find("if(") != string::npos || line.find("if (") != string::npos) {
       complejidad_linea = if_condicion(fuente, num_linea, loops_condiciones, loops_condiciones_end);
       if (complejidad_condicion.length() > 0 && complejidad_condicion.at(complejidad_condicion.length() - 1) != '(') {
           complejidad_condicion += "+";
