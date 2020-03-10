@@ -93,9 +93,13 @@ bool is_in(string sub, int const &opcion);
 /* Auxiliar en if_condicion; regresa complejidad de la.
  *
  * @param &line: contiene línea de código a interpretar.
+ * @param &fuente: vector que almacenará por espacio, una línea del código.
+ * @param num_linea: indice que indica osbre qué línea se está iterando.
+ * @param &loops_condiciones: auxiliar en mantener los ciclos anidados.
+ * @param &loops_condiciones_end: auxiliar en mantener los ciclos anidados.
  *
  */
-string analizar_complejidad_if(string &line);
+string analizar_complejidad_if(string &line, vector<string> &fuente, int num_linea, stack<string>& loops_condiciones, stack<string>& loops_condiciones_end);
 
 
 /* Limpia polinomios para mejor interpretación,

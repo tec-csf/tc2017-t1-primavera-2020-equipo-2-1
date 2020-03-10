@@ -7,14 +7,13 @@ void B(int n) {
         s += j;
         j+=2;
     }
+    else if(i<10) {
+      j++;
+    } else{
+      j+=2;
+    }
 
     cout << s << endl;
 
-    else if(i<10) {
-      j++;
-    }
-    else{
-      j+=2;
-    }
   }
 }
