@@ -1,3 +1,7 @@
+// -*- lsst-c++ -*-
+/*
+*/
+
 #include <iostream>
 #include <stack>
 #include <string>
@@ -7,6 +11,11 @@
 #include <list>
 #include <cstdlib>
 #include <vector>
+#include <string.h> //<- Substring manager
+#include<stdio.h> 
+#include<stdlib.h> 
+#include<bits/stdc++.h>
+#include <cstdlib>
 
 using namespace std;
 
@@ -63,23 +72,17 @@ list <char> arithmetics;
         int i=0;
 
     while(regex_search(str,match,reg)){
-            
-            //cout << match.str() << "\n";
-
             crearListaOperaciones(str,match.str(),i);
             crearMonomio(match.str());
             str=match.suffix().str();
             i++;
 
     }
-        //cout<<endl;
-        
-        //print(arithmetics);
+
     }
 
     void crearListaOperaciones(string pol, string s, int pos){
 
-        //cout<<pol<<endl;
         
         for(int i=0; i<s.size();i++){
             if(s.at(i)=='^'){
@@ -90,17 +93,13 @@ list <char> arithmetics;
 
         s="[+|-]?"+s+"[+|-]?";
 
-        //cout<<s<<endl;
-
         regex reg (s);
-        //cout<<reg<<endl;
-         sregex_iterator currentMatch(pol.begin(),
-            pol.end(), reg);
+
+         sregex_iterator currentMatch(pol.begin(),pol.end(), reg);
         sregex_iterator lastMatch;
 
     while(currentMatch != lastMatch){
             smatch match = *currentMatch;
-            //cout << match.str() <<"\n";
             if(pos==0&& match.str().at(0)!='-'){
                 arithmetics.push_back('+');
                 return;
@@ -121,11 +120,10 @@ list <char> arithmetics;
             
         currentMatch++;
     }
-       // cout<<endl;
+
     }
 
     void crearMonomio(string m){
-
         
         S tempcoef;
         S tempvar;
@@ -138,17 +136,8 @@ list <char> arithmetics;
         tempvar=isChar(var,2,m);
         temppot=isChar(pot,1,m);
 
-         //cout<<tempcoef+ " "<<tempvar+" "<<temppot<<endl;
-
         Monomio<T,S> *nuevo=new Monomio<T,S> (stof( tempcoef ),tempvar,stof( temppot ));
         insertar(nuevo);
-        //couter++;
-
-
-
-     
-
-
     }
 
     S isChar(regex reg, int type, string mon){
@@ -158,7 +147,6 @@ list <char> arithmetics;
 
     while(currentMatch != lastMatch){
             smatch match = *currentMatch;
-            //cout << match.str() <<"\t";
 
             if(type==0||type==2){
                 return match.str();
@@ -198,8 +186,7 @@ list <char> arithmetics;
     string eraseAllSubStr(string mainStr, const string toErase)
 {
 	size_t pos = string::npos;
- 
-	// Search for the substring in string in a loop untill nothing is found
+
 	while ((pos  = mainStr.find(toErase) )!= string::npos)
 	{
 		// If found then erase it from string
@@ -219,9 +206,6 @@ list <char> arithmetics;
         s=eraseAllSubStr(s,"00000");
         s=eraseAllSubStr(s,"0000");
         s=eraseAllSubStr(s,"000");
-         
-        
-        
 
         for (int i =0; i<s.size();i++){
 
@@ -264,7 +248,7 @@ list <char> arithmetics;
         auto it=arithmetics.begin();
         auto it2=poly2.arithmetics.begin();
 
-while(temp1!=NULL){
+    while(temp1!=NULL){
 
             while(temp2!=NULL){
 //Signos DIVISION
@@ -296,11 +280,9 @@ while(temp1!=NULL){
                     exp=1;
                     variable="";
                     poly=poly+signo+to_string(tempcoef);
-
                 }
                 
                 else if(temp1->var==temp2->var){
-                    //cout<<"Var"<<endl;
                     variable = temp1->var;
                     exp=temp1->exp-temp2->exp;
                     if(exp==0){
@@ -327,11 +309,7 @@ while(temp1!=NULL){
                 }
                 temp2=temp2->next;
                 it2++;
-
-                //poly="";
                 variable="";
-
-                //cout<<"change"<<endl;
             }
         it2=poly2.arithmetics.begin();
         temp2=poly2.head;
@@ -340,10 +318,9 @@ while(temp1!=NULL){
 
 
         }
-        //cout<<poly<<endl;
+
         poly=formatoMultiplo(poly);
         return poly;
-        //cout<<poly<<endl;
 
     }
 
@@ -370,7 +347,6 @@ while(temp1!=NULL){
 //-----------------------------------------------------------------------------
                 tempcoef=temp1->coef*temp2->coef;
                 if(*it==*it2){
-                    //cout<<"Signo"<<endl;
                     if(*it=='+'){
                         signo="+";
                     }else if(*it=='-'){
@@ -398,7 +374,6 @@ while(temp1!=NULL){
 
                 }
                 else if(temp1->var==temp2->var){
-                    //cout<<"Var"<<endl;
                     variable = temp1->var;
                     exp=temp1->exp+temp2->exp;
                     poly=poly+signo+to_string(tempcoef)+variable+"^"+to_string(exp);
@@ -425,7 +400,6 @@ while(temp1!=NULL){
                 temp2=temp2->next;
                 it2++;
 
-                //poly="";
                 variable="";
                 counter++;
             }
@@ -444,34 +418,8 @@ while(temp1!=NULL){
         
         poly=formatoMultiplo(poly);
         return poly;
-        //cout<<poly<<endl;
 
     }
-    
-    
-
-
-
-    void print(list<char> const &list)
-{
-    for (auto it = list.cbegin(); it != list.cend(); it++)
-    {
-        std::cout << *it << '\n';
-    }
-}
-    
-   void printList(){
-       std :: list<char>::iterator it=arithmetics.begin();
-       it++;
-       int count=0;
-			Monomio <T,S>*temp=head;
-			while(temp!=NULL){
-				cout<<temp->mon<<*it;
-				temp=temp->next;
-                it++;
-			}
-			cout<<endl;
-		}
 
     ~Polinomio(){
 
@@ -538,7 +486,6 @@ string findAndReplaceAll(string data,string toSearch,string replaceStr)
                 Polinomio <float, string> numerador;
                 numerador.crearPoly(temp2);
                 fraccion=denominador.dividir(numerador);
-
                 return fraccion;
                 break;
             }
@@ -546,8 +493,7 @@ string findAndReplaceAll(string data,string toSearch,string replaceStr)
         return s;
     }
  
-    string lucifer(string s){
-
+    string mainframe(string s){
 
     string auxD="";
     string temp1="";
@@ -562,33 +508,28 @@ string findAndReplaceAll(string data,string toSearch,string replaceStr)
 
     while (!copia.empty())
     {
-    //copia.top()=checkDivision(copia.top());
-    //cout<<"Init "<<copia.top()<<simbolos.top()<<capa.top()<<endl;
 
     if(capa.top()==1){
 
-    
-    if(simbolos.top()=='*'){
-        auxD=checkDivision(copia.top());
-        copia.pop();
-        copia.push(auxD);
-        temp1=copia.top();
-        copia.pop();
-        auxD=checkDivision(copia.top());
-        copia.pop();
-        copia.push(auxD);
-        temp2=copia.top();
-        Polinomio <float,string> in;
-        in.crearPoly(temp1);
-        Polinomio <float,string> out;
-        out.crearPoly(temp2);
-        operations=out.multiplicar(in);
-        copia.pop();
-        copia.push(operations);
-        simbolos.pop();
-        capa.pop();
-        //cout<<"Test1"<<endl;
-        //PrintStack(pilaPolys,simbolos,capa);
+        if(simbolos.top()=='*'){
+            auxD=checkDivision(copia.top());
+            copia.pop();
+            copia.push(auxD);
+            temp1=copia.top();
+            copia.pop();
+            auxD=checkDivision(copia.top());
+            copia.pop();
+            copia.push(auxD);
+            temp2=copia.top();
+            Polinomio <float,string> in;
+            in.crearPoly(temp1);
+            Polinomio <float,string> out;
+            out.crearPoly(temp2);
+            operations=out.multiplicar(in);
+            copia.pop();
+            copia.push(operations);
+            simbolos.pop();
+            capa.pop();
     } else if(simbolos.top()=='+'){
 
         copia.pop();
@@ -596,7 +537,6 @@ string findAndReplaceAll(string data,string toSearch,string replaceStr)
         capa.pop();
         
         string regexs=temp2+temp1;
-          // cout<<"Test2"<<endl;
            auxiliar1=findAndReplaceAll(copia.top(),regexs,operations);
 
             if(auxiliar1.compare(copia.top())==0&&capa.top()!=0){
@@ -606,9 +546,9 @@ string findAndReplaceAll(string data,string toSearch,string replaceStr)
            simbolos.pop();
            capa.pop();
             }else if(auxiliar1.compare(copia.top())!=0&& global1.compare("")!=0||capa.top()==0){
-            global1=global1+simbolos.top()+operations;
+                global1=global1+simbolos.top()+operations;
      
-           simbolos.pop();
+                simbolos.pop();
 
 
            for(int i=0; i<copia.top().size();i++){
@@ -622,85 +562,63 @@ string findAndReplaceAll(string data,string toSearch,string replaceStr)
            copia.top()=auxiliar1+global1+")";
            global1="";           
            }else{
-            copia.pop();
-           copia.push(auxiliar1);
-           simbolos.pop();
-           
-           }
-
-        
+                copia.pop();
+                copia.push(auxiliar1);
+                simbolos.pop();           
+           }        
     }
     }else if(capa.top()==0){
 
         if(simbolos.top()=='*'){
 
-        auxD=checkDivision(copia.top());
-        copia.pop();
-        copia.push(auxD);
-        temp1=copia.top();
-        copia.pop();
-        auxD=checkDivision(copia.top());
-        copia.pop();
-        copia.push(auxD);
-        temp2=copia.top();
-        Polinomio <float,string> in;
-        in.crearPoly(temp1);
-        Polinomio <float,string> out;
-        out.crearPoly(temp2);
-        operations=out.multiplicar(in);
-        copia.pop();
-        copia.push(operations);
-        simbolos.pop();
-        capa.pop();
-        //cout<<"Test1"<<endl;
-        //PrintStack(pilaPolys,simbolos,capa);
-
+            auxD=checkDivision(copia.top());
+            copia.pop();
+            copia.push(auxD);
+            temp1=copia.top();
+            copia.pop();
+            auxD=checkDivision(copia.top());
+            copia.pop();
+            copia.push(auxD);
+            temp2=copia.top();
+            Polinomio <float,string> in;
+            in.crearPoly(temp1);
+            Polinomio <float,string> out;
+            out.crearPoly(temp2);
+            operations=out.multiplicar(in);
+            copia.pop();
+            copia.push(operations);
+            simbolos.pop();
+            capa.pop();
         }else if(simbolos.top()=='+'){
 
             global0=global0+simbolos.top()+copia.top();
-        
             copia.pop();
-          // cout<<"Test2"<<endl;
-           
             if(copia.empty()){
+
             for(int i=0; i<s.size();i++){
 
                if(s.at(i+1)=='('){
                    auxiliar1=s.substr(0,i);
                    global0=auxiliar1+global0;
                    break;
-               }
-         
+               }         
             }
-
             }
-
             simbolos.pop();
             capa.pop();
-            
-
         }
-
-
+        }
 
     }
-
-
-
-    }//end while
-        if(global0.compare("")==0){
-            return s;
-        }
-        else{
-            return global0;
-        }
+    if(global0.compare("")==0){
+        return s;
+    }
+    else{
+        return global0;
+    }
         
-
-//PrintStack(pilaPolys,simbolos,capa);
-    }//end of lucifer
+    }
     
-
-
     stack<string> separarMulti(string polinomio, int current, int size, int type){
     stack <string> operaciones;
     queue <string> interOperaciones;
@@ -710,39 +628,29 @@ string findAndReplaceAll(string data,string toSearch,string replaceStr)
     int layer=type;
     char savesym;
 
-
     for(int j=current;j<size;j++){
-    //
-        
+
         if(polinomio.at(j)=='('){
             
             savesym=polinomio.at(j-1);
-            //cout<<savesym;
             capa.push(layer);
 
-            
             if(savesym=='+'|savesym=='-'){
                 simbolos.push(savesym);
                             
             }else if(savesym==')'){
                     simbolos.push('*');
             }
-           // cout<<simbolos.top()<<savesym;
+
             ++parentesisCounter;
             while (parentesisCounter>0 && j<size)
             {               
-                //cout<<parentesisCounter; 
                 poly=poly+polinomio.at(j);
-                //cout<<poly<<endl;
-                
-
                 if(polinomio.at(j)==')'&& type==0) {
                     
                     --parentesisCounter;
 
-                    if(parentesisCounter==0){
-                    
-                        
+                    if(parentesisCounter==0){ 
                         operaciones.push(poly);
                         poly="";
                         --j;
@@ -751,13 +659,7 @@ string findAndReplaceAll(string data,string toSearch,string replaceStr)
                         interOperaciones.pop();
                     }
 
-                    }
-
-
-                    
-
-                        
-                        
+                    }        
                 }
                 ++j;
 
@@ -770,72 +672,26 @@ string findAndReplaceAll(string data,string toSearch,string replaceStr)
                     {
                        interOperaciones.push(aux.top());
                        aux.pop();
-
-                    }
-
-                    
-                
-                
+                    }                
                 }
                 
                 if(polinomio.at(j)==')'&& layer==1)  {
                     --parentesisCounter;
                     
-                    
-                    //cout<<"DEBUGGER"<<endl;
                      if(parentesisCounter==0){
-                        //cout<<layer;
                         poly=poly+polinomio.at(j);
                         operaciones.push(poly);
                         poly="";
                         --j;
                         j=size;
                     }
-                } 
-
-                
-                        
+                }                         
             }
-            //cout<<poly<<endl;
         }
     }
 
     return operaciones;
     }
-
-
-    
-void PrintStack(stack<string> s, stack<char> t, stack<int> r) 
-{ 
-    // If stack is empty then return 
-    if (s.empty())  
-        return; 
-      
-  
-    string x =s.top();
-    int y=r.top();
-    char z =t.top();
-  
-    // Pop the top element of the stack 
-    s.pop();
-    r.pop();
-    t.pop();
-    // Recursively call the function PrintStack 
-    
-
-    // Print the stack element starting 
-    // from the bottom 
-    cout <<x<<y<<z<<endl; 
-      PrintStack(s,t,r); 
-    // Push the same element onto the stack 
-    // to preserve the order 
-
-    r.push(y);
-    s.push(x);
-    t.push(z);
-    
-} 
-
 
 void restructurarPila(){
     while(pilaPolys.size()!=capa.size()){
@@ -843,22 +699,17 @@ void restructurarPila(){
     }
 }
 
-//hello
-//s.at(i)=='e'
-//s.at(i)="";
-
 string automatizar (string s){
 
     string test;
     pilaPolys=separarMulti(s,0,s.size(),0);
     restructurarPila();
-    //PrintStack(pilaPolys,simbolos,capa);
-    test=lucifer(s);
+    test=mainframe(s);
     
     cout<<test<<endl;
     cout<<checarComplejidad(test)<<endl;
     
-    return "s";
+    return test;
 
 }
 string automatizarAux (string s){
@@ -866,9 +717,8 @@ string automatizarAux (string s){
     string test;
     pilaPolys=separarMulti(s,0,s.size(),0);
     restructurarPila();
-    test=lucifer(s);
-    //cout<<test<<endl;
-    //cout<<checarComplejidad(test)<<endl;
+    test=mainframe(s);
+
     
     return checarComplejidad(test);
 
@@ -885,8 +735,8 @@ int compararComplejidad(string *a,int size){
 
     for(int i=0; i<size;i++){
         bigO[i]=automatizarAux(a[i]);
-        cout<<bigO[i]<<endl;
     }
+
 
     for(int i=0;i<size;i++){
 
@@ -901,34 +751,244 @@ int compararComplejidad(string *a,int size){
             }
         }
 
-
     }
-
-
-
-
-
     return save;
-
 }
 
+};
 
+class Binomio
+{
+    public: 
+    string binomio;
+    char bin[900];
+    string values[900][3];
+    double numbers [900][2];
+    char r;
+    bool elevate = false;
+    double temp;
+    int t=0;
+    
+    //
+    void setBinomio(string b)
+    {
+        binomio = b;
+    };
+
+    //metodo para separar el binomio
+    void separador()
+    {
+        //rellena los valores númericos con 1, si no encuentra coeficientes o exponentes implica que estos = 1.
+        //rellena los valores alfabeticos con null, implica que solo es una cantidad numerica
+        for(int h=0; h<20; h++)
+        {
+            values[h][1]="null";
+            numbers[h][0]=1;
+            numbers[h][1]=1;
+        };
+
+        //variables temporales
+        string terminos, coeficientes, exponentes, temporal;
+
+
+        //convierte el arreglo de string a char para ser manejable
+        strcpy(bin, binomio.c_str());
+
+        //corre unicamente el largo del binomio
+        for(int i = 0; i<binomio.size(); i++)
+        {   
+            //variable r para manerjar el dato actual del binomio
+            r = bin[i];
+
+            //checa si el char es un numero
+            if(isdigit(r)||r=='.')
+            {
+                //variable elevate para determinar si es un coeficiente o exponente
+
+                //false == coeficiente
+                if(elevate==false)
+                {
+                    temporal=binomio.substr(i,1);
+                    coeficientes = coeficientes + temporal;
+                };
+
+                //true == exponente
+                if(elevate==true)
+                {
+                    temporal=binomio.substr(i,1);
+                    exponentes = exponentes + temporal;
+                };
+            };
+
+            //checa si char es valor alfabetico
+            if(isalpha(r))
+            {
+                temporal=binomio.substr(i,1);
+                terminos = terminos + temporal;
+            };
+
+            //cambia el valor de elevate
+            if(r=='^')
+            {
+                elevate=true;
+            };
+            //detecta suma resta o acaba el binomio
+            if(r=='-' || r=='+' || i==binomio.size()-1)
+            {
+                //si es el primer char del binomio implica que es negativo
+                if(i==0)
+                {
+                    values[0][0] = "-";
+                };
+
+                if(i!=0)
+                {
+                    //Stoi = string -> int
+
+                    //catcher de error si el coeficiente está vacio
+                    if(coeficientes != "")
+                    {
+                        numbers[t][0] = stod(coeficientes);
+                    }
+                    //catcher de error si el exponente está vacio
+                    if(exponentes != "")
+                    {
+                        numbers[t][1] = stod(exponentes);
+                    }
+                    //catcher de error si el termino está vacio
+                    if(terminos!="")
+                    {
+                        values[t][1] = terminos;
+                    };
+
+                    //checa si no es el ultimo valor
+                    if(i!=binomio.size())
+                    {
+                        temporal=binomio.substr(i,1);
+                        values[t+1][0] = temporal;
+                    };
+
+                    //si es negativo convierte el número a uno negativo
+                    if(values[t][0]=="-")
+                    {
+                        temp = numbers[t][0];
+                        temp = temp*-1;
+                        numbers[t][0] = temp;
+
+                    };
+
+                    //reset
+                    coeficientes = "";
+                    exponentes = "";
+                    exponentes = "";
+                    terminos = "";
+                    elevate = false;
+
+                    //cambio de polinomio
+                    t++;
+                    
+                };//i!=0
+            };//acaba el detector
+        };//acaba for loop principal
+    };// acaba metodo separador
+
+    void sumar()
+    {
+
+        // values[i][1] == termino
+        // values[i][2] == si ya se sumó
+        // numbers[i][0] == coeficientes
+        // numbers[i][1] == exponentes
+
+        int temp = 1;
+        int suma = 0;
+        int counter2 = 0;
+
+        //variable para determinar su uso
+        for(int b=0;b<t;b++)
+        {
+            values[b][2]="sin uso";
+        };
+
+        for(int i=0; i<t;i++)
+        {
+            for(int b = i+1; b<t; b++)
+            {
+                if(values[i][1]==values[b][1] && numbers[i][1]==numbers[b][1])
+                {
+                    if(values[i][2]=="sin uso" || values[i][2]=="en uso" && values[i][2]!="usado")
+                    {
+                        suma=numbers[i][0]+numbers[b][0];
+                        numbers[i][0] = suma;
+                        values[b][1]="muerto";
+                        values[i][2]=="en uso";
+                        values[b][2]=="usado";
+                    };
+                };
+            };
+        };
+    };//end metodo sumar
+
+    void imprimir_resultado()
+    {
+        for(int i = 0; i-t;i++)
+        {
+            if(values[i][2]=="en uso"||values[i][2]=="sin uso")
+            {
+                if(numbers[1][0]<0)
+                {
+                    //cout<<numbers[1][0]<<values[i][1]<<"^"<<numbers[i][1]<<" ";
+                };
+                if(numbers[1][0]>0)
+                {
+                    if(i!=0&&values[i][1] !="muerto"&&numbers[i][0]!=0&&numbers[i][1]!=0)
+                    {
+                        if(numbers[i][0]>0)
+                        {
+                            cout<<"+";
+                        };
+
+                    };
+
+                    if(numbers[i][0]!=1&&values[i][1] !="muerto"&&numbers[i][0]!=0&&numbers[i][1]!=0)
+                    {
+                        cout<<numbers[i][0]<<"";
+                    };
+
+                    if(numbers[i][0]==1 && values[i][1] =="null"&&values[i][1] !="muerto"&&numbers[i][0]!=0&&numbers[i][1]!=0)
+                    {
+                        cout<<numbers[i][0]<<"";    
+                    };
+
+                    if(values[i][1]!="null"&&values[i][1] !="muerto"&&numbers[i][0]!=0&&numbers[i][1]!=0)
+                    {
+                        cout<<values[i][1]<<"";
+                    };
+
+                    if(numbers[i][1]!= 1&&values[i][1] !="muerto"&&numbers[i][0]!=0&&numbers[i][1]!=0)
+                    {
+                        cout<<"^"<<numbers[i][1]<<" ";
+                    };
+                };
+            };
+
+        };
+        cout<<" "<<endl;
+    };
 
 };
+
 
 int main(){
 
     Symbolab s;
     string str= "0+1+1+(2)(n-1-1+1/2)+(2)(n-1-1/2)+(n-1-1/2)(logn+(logn)(1+(1)(j-1+1)+(1)(j-1)+(j-1)(2))).";
-    //cout<<s.at(1)<<endl;
-    //n+1+(n+1)(1+(1)(n+1)+(1)(n-1+1)+(n+1)(1+(1)(n+1)+(1)(n-1))).
     string x;
     x=s.automatizar(str);
-    //cout<<"DEBUG"<<x<<endl;
-
-    //s.PrintStack(s.pilaPolys,s.simbolos,s.capa);
-    
-  //0+0+1+1+(2)(n-1-(1)+1)+(1)(n-1-(1))+(n-1-(1))(2+(1)(n-(i+1)+1)+(1)(n-(i+1))+(n-(i+1))(1+(1)(j-(1)+1)+(1)(j-(1))+(j-(1))(2)))
-  //0+0+1+1+(2)(n-1-1+1)+(1)(n-1-1)+(n-1-1)(2+(1)(n-i+1+1)+(1)(n-i+1)+(n-i+1)(1+(1)(j-1+1)+(1)(j-1)+(j-1)(2)))  
+    Binomio ejemplo;
+    ejemplo.setBinomio(x);
+    ejemplo.separador();
+    ejemplo.sumar();
+    ejemplo.imprimir_resultado();
     return 0;
 }
