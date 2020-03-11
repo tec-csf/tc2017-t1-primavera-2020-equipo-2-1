@@ -506,6 +506,7 @@ void imprimir_tabla(vector<string> &fuente)
     { printf(" |%- 5d || %-54s || %-35s |\n", i, fuente[i].c_str(), analizar_complejidad(fuente[i], poli, fuente, i, loops_condiciones, loops_condiciones_end).c_str()); }
 
     printf(" %s\n", "---------------------------------------------------------------------------------------------------------");
+    cout << "\n Polinomio largo: " << poli << '\n';
     poli=t.limpiador(poli);
     poli=p.pyton(poli);
     cout << "\n Polinomio: " << poli << '\n';
