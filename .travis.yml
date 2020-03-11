@@ -16,4 +16,4 @@ install:
 
 script:
   - g++ sources/complejidad.cpp sources/funciones.cpp -std=c++17 -o main
-  - ./main -i examples/fuentebubble.cpp
+  - ./main -i examples/fuente5.cpp
