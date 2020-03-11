@@ -5,9 +5,11 @@
 #include <stack>
 #include <vector>
 #include "funciones.hpp"
-
+#include "puente.cpp"
+#include "translate.cpp"
 using namespace std;
-
+Puente p;
+Translate t;
 void imprimir_raw(ifstream &archivo)
 {
     string line;
@@ -504,5 +506,8 @@ void imprimir_tabla(vector<string> &fuente)
     { printf(" |%- 5d || %-54s || %-35s |\n", i, fuente[i].c_str(), analizar_complejidad(fuente[i], poli, fuente, i, loops_condiciones, loops_condiciones_end).c_str()); }
 
     printf(" %s\n", "---------------------------------------------------------------------------------------------------------");
+    poli=t.limpiador(poli);
+    poli=p.pyton(poli);
+    for(int i=0)
     cout << "\n Polinomio: " << poli << '\n';
 }

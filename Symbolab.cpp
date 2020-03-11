@@ -982,8 +982,8 @@ class Binomio
 int main(){
 
     Symbolab s;
-    string str= "0+1+1+(2)(n-1-1+1/2)+(2)(n-1-1/2)+(n-1-1/2)(logn+(logn)(1+(1)(j-1+1)+(1)(j-1)+(j-1)(2))).";
-    string x;
+    string str= "0+1+1+(2)(n-1-(1)+1)/2)+(2)(n-1-(1)/2)+(n-1-(1)/2)(logn+(logn)(1+(1)(j-(1)+1)+(1)(j-(1)+(j-(1))(2)))";
+    string x;    
     x=s.automatizar(str);
     Binomio ejemplo;
     ejemplo.setBinomio(x);

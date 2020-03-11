@@ -5,9 +5,8 @@
 #include <stack>
 #include <vector>
 #include "funciones.hpp"
-
+#include "puente.cpp"
 using namespace std;
-
 
 int main(int argc, char const *argv[]) {
   string opcion = *(argv + 1);
@@ -39,4 +38,5 @@ int main(int argc, char const *argv[]) {
 
     return 0;
   }
+  
 }
