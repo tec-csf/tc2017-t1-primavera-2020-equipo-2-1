@@ -14,9 +14,9 @@ class Puente{
         archivo2<<s<<endl;
         archivo2.close();
         //system("sudo apt-get update");
-        system("sudo apt-get -qq install python3-pip");
+        system("sudo apt-get -qq install python3-pip3");
         system("pip install -qq --user sympy");
-        system("python3 bridge.py");
+        system("python bridge.py");
         archivo.open("polinomio.txt");
         if(archivo.is_open()){
             while(getline(archivo,linea)){
