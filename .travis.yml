@@ -15,14 +15,5 @@ install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 script:
-<<<<<<< HEAD
   - g++ complejidad.cpp funciones.cpp -std=c++17 -o main
   - ./main -i examples/ejemplo1.cpp
-=======
-  - g++ sources/complejidad.cpp sources/funciones.cpp -std=c++17 -o main
-<<<<<<< HEAD
-  - ./main -i examples/fuentebubble.cpp
->>>>>>> 8c286afcc477696321e42a658d0031dcd6291536
-=======
-  - ./main -i examples/fuente5.cpp
->>>>>>> 6929ba564c51a803fbf2c8da57617fd78b24f970
