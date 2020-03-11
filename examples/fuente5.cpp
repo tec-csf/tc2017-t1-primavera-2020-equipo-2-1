@@ -9,7 +9,7 @@ void A(int n) {
         }
       }
     } else {
-      int e = 1; 
+      int e = 1;
     }
   }
 }

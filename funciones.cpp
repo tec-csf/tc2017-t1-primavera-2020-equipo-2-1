@@ -266,6 +266,7 @@ string for_loop(string &linea, stack<string>& loops_condiciones, stack<string>& 
     {
         loops_condiciones.push("logn");
         loops_condiciones_end.push("logn");
+
         return "logn";
     }
 
