@@ -508,6 +508,5 @@ void imprimir_tabla(vector<string> &fuente)
     printf(" %s\n", "---------------------------------------------------------------------------------------------------------");
     poli=t.limpiador(poli);
     poli=p.pyton(poli);
-    for(int i=0)
     cout << "\n Polinomio: " << poli << '\n';
 }
