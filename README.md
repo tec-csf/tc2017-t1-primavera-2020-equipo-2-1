@@ -1,4 +1,4 @@
-# Tarea *1*. *Complejidad Computacional*
+# Equipo *3*. *Análisis y diseño de Algoritmos*
 
 ---
 
@@ -12,7 +12,7 @@
 ---
 ## 1. Aspectos generales
 
-Las orientaciones de la tarea se encuentran disponibles en la plataforma **Canvas**.
+Las orientaciones de las tareas se encuentran disponibles en la plataforma **Canvas**.
 
 Este documento es una guía sobre qué información debe entregar como parte de la tarea, qué requerimientos técnicos debe cumplir y la estructura que debe seguir para organizar su entrega.
 
@@ -40,28 +40,12 @@ El proyecto debe seguir la siguiente estructura de carpetas:
 
 ## 2. Solución
 
-La solución implementada constituye un programa que analiza linea por linea la complejidad de un código. Sobre cada iteración un metodo se encarga de analizar si la linea pertenece a una de las 3 estructuras implementadas (*"for"*, *"while"* e *"if"*) o si es simplemente una línea con operaciones elementales. En primera instancia se imprimira cada línea de código seguida de sus operaciones elementales correspondientes, las cuales pueden ser expresadas como números enteros, o como polinomios (casos *"for"* y *"while"*). Además de imprimir la tabla, simultaneamente la función almacena las operaciones elementales del código en una variable "polinomio", la cuál, será impresa para y posteriormente analizada por otro código, el cual se encargara de simplificar y obtener la complejidad *"Big O"* del polinomio, y la del código como resultado.  
+*[Incluya aquí una explicación de la solución implementada]*
 
 ### 2.1 Pasos a seguir para utilizar la aplicación
 
-Primeramente, el repositorio debe de ser clonado. Para ello, se debe de correr el siguiente comando en la terminal del ordenador que se está utilizando, habiendose ubicado previamente en la ubicación donde se desea guardar el repositorio: 
-   
-    $ git clone https://github.com/tec-csf/tc2017-t1-primavera-2020-equipo-2-1.git
-
-Una vez clonado el repositorio, se tiene acceso a los códigos fuente que analizan la complejidad del código y los codigos *".cpp"* que pueden ser utilizados de ejemplo para probar el código. Para realizar lo anterior se pueden seguir los siguientes comandos en orden (tomado en cuenta que el compilador g++/clang se encuentra instalado en su ordenador): 
-
-    $ g++ funciones.cpp complejidad.cpp -o complejidad
-
-    $ ./complejidad -o ./examples/ejemplo1.cpp
-
-De esta manera, la solución implementada mostrara el código que se ha analizado, una tabla con sus respectivas operaciones elementales, el polinomio correspondiente a dicho código y orden de complejidad *"Big O"*. Notese que existen 3 ejemplos para probar el codigo, para utilizarlos simplemente se puede cambiar el numero a de *"ejemplo#.cpp"* por 1, 2 o 3. 
+*[Incluya aquí una guía paso a paso para poder utilizar la aplicación, desde la clonación del repositorio, la compilación del código hasta la ejecución de los ejemplos para visualizar los resultados.]*
 
 ## 3. Referencias
 
-    http://www.cplusplus.com/reference/regex/
-
-La librería *"regex"* por "regular expression" fue una herramienta útil en el momento en el que se trabajo sobre el polinomio para identificar patrones dentro del "string" que se envíaba como parametro, de este manera se logró que las operaciones entre monomios y polinomios pudiera ser efectuada.
-
-    http://www.cplusplus.com/reference/stack/stack/
-    
-La librería de *"stack"* fue muy útil en este caso debido a que las pilas, debido a su funcionamiento, resultaron ser muy utiles en los casos donde se quería conocer las lineas que se encontraban entro de las llaves ({}) que encerraban el contenido de una estructura, ya sea (*"for"*, *"while"* o *"if"*). 
+*[Incluya aquí las referencias a sitios de interés y cualquier otra información que haya utilizado para realizar la actividad y que le puedan ser de utilidad a otras personas que quieran usarlo como referencia]*
