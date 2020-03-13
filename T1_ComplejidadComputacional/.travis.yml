@@ -1,3 +1,4 @@
+# ESTE ES EL TRAVIS
 language: cpp
 compiler:
   -gcc
@@ -15,5 +16,5 @@ install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 script:
-  - g++ T2_AnalisisAlgoritmos/sources/8ball.cpp -std=c++17 -o 8
-  - ./8
+  - g++ T1_ComplejidadComputacional/sources/complejidad.cpp T1_ComplejidadComputacional/sources/funciones.cpp -std=c++17 -o main
+  - ./main -i T1_ComplejidadComputacional/examples/ejemplo1.cpp
