@@ -15,5 +15,5 @@ install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 script:
-  - g++ T2_AnalisisAlgoritmos/examples/8ball.cpp -std=c++17 -o 8
-  - ./8
+  - g++ T2_AnalisisAlgoritmos/examples/get_time_y_rands.cpp -std=c++17 -o randtime
+  - ./randtime

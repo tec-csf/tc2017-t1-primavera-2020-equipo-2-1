@@ -3,7 +3,7 @@
 #include <fstream>  // archivos
 #include <string>   // substr()
 #include <cstdio>   // printf()
-#include <ctime>    // time()
+#include <ctime>    // time() [para rands] y clock()
 #include <stack>
 #include <vector>
 
