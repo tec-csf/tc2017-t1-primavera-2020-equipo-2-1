@@ -12,17 +12,34 @@ using namespace std;
 
 // Aquí van las funciones de hpp, pero ya con código
 //CONSTRUCTORES
-Class::Class(string new_name)
-  : name(new_name) {}
-
-Class::Class(string new_name, int val);
-  : name(new_name), var(val) {}
-
-// Destructor
-Class::~Class() {
-  cout << "Goodbye " << title; // Optional
+Arbol::Arbol()
+{
+    a = new int;
 }
 
-type Class::method(arguments) {
-  /* code */
+// Class::Class(string new_name, int val);
+//   : name(new_name), var(val) {}
+
+// Destructor
+Arbol::~Arbol()
+{
+    delete a;
+}
+
+
+void Arbol::agregar(int valor)
+{
+    cout << "Agregando " << valor << "\n";
+}
+
+
+void Arbol::eliminar(int valor)
+{
+    cout << "Eliminando " << valor << "\n";
+}
+
+
+void Arbol::buscar(int valor)
+{
+    cout << "Buscando " << valor << "\n";
 }

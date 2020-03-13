@@ -9,33 +9,42 @@
 
 using namespace std;
 
-// type name(parameters);
-// void asterisk(std::string word, std::string &text, int i);
-
-// Only if there is a class
-class Name
+class Arbol
 {
-  // variables (todo estos son privados)
+    // variables (todo estos son privados)
+    int* a;
 
-  // method declaration (definition will be made in cpp)
-  public:
+    // method declaration (definition will be made in cpp)
+    public:
+        // CONSTRUCTORES
+        Arbol();
+        // Name(string new_name, int val);
 
-    // CONSTRUCTORES
-    Name(string new_name);
-    Name(string new_name, int val);
+        // Destructor (SOLO UNO)
+        ~Arbol();
 
-    // Destructor (SOLO UNO)
-    ~Name();
+        /* Agrega nodo con valor establecido en su lugar correcto
+        *
+        * @param &valor: valor del nodo a agregar.
+        */
+        void agregar(int valor);
 
-    // type name(parameters);
-    // void asterisk(std::string word, std::string &text, int i);
+
+        /* Elimina nodo con valor establecido en su lugar correcto
+        *
+        * @param &valor: valor del nodo a eliminar.
+        */
+        void eliminar(int valor);
 
 
-  protected:
-    // type name(parameters);
-    // void asterisk(std::string word, std::string &text, int i);
+        /* Buscar nodo con valor establecido en su lugar correcto
+        *
+        * @param &valor: valor del nodo a buscar.
+        */
+        void buscar(int valor);
 
-  private:
-    // type name(parameters);
-    // void asterisk(std::string word, std::string &text, int i);
+    protected:
+
+    private:
+
 };

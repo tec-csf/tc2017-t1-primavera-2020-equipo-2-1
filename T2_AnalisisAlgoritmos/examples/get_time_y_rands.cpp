@@ -27,6 +27,6 @@ int main ()
 
     cout << "Generar 10,000 numeros aleatorios tomó: ";
     cout << (float)time_req/CLOCKS_PER_SEC << " segundos.\n" << endl;
-
+    cout << "\n\n\t\t-----FIN PROGRAMA-----\n\n";
     return 0;
 }
