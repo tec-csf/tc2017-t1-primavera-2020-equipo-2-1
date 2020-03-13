@@ -16,7 +16,7 @@ class Puente{
         //system("sudo apt-get update");
         system("sudo apt-get -qq install python-pip");
         system("pip install -qq --user sympy");
-        system("python sources/bridge.py");
+        system("python T1_ComplejidadComputacional/sources/bridge.py");
         archivo.open("polinomio.txt");
         if(archivo.is_open()){
             while(getline(archivo,linea)){
