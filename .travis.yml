@@ -17,3 +17,5 @@ install:
 script:
   - g++ T2_AnalisisAlgoritmos/sources/functions.cpp T2_AnalisisAlgoritmos/sources/main.cpp -o a -std=c++17 -o t2
   - ./t2
+  - 1
+  - b
